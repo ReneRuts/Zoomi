@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Zoomi</string>
+    <string name="login_button">login</string>
+    <string name="add_workout">Add new Workout</string>
+    <string name="Workout1">Short Run</string>
+    <string name="Workout2">Short Run</string>
+    <string name="Workout3">Short Run</string>
+    <string name="Workout4">Short Run</string>
 </resources>
