@@ -2,7 +2,7 @@ package com.group1.zoomi.data
 
 import kotlinx.coroutines.flow.Flow
 
-class UserRepository(private val userDao: UserDao) {
+class WorkoutRepository(private val userDao: UserDao) {
 
     suspend fun registerUser(user: User) = userDao.insert(user)
     suspend fun updateUser(user: User) = userDao.update(user)
