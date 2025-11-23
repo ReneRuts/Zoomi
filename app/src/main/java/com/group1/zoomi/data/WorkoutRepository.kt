@@ -2,12 +2,12 @@ package com.group1.zoomi.data
 
 import kotlinx.coroutines.flow.Flow
 
-class WorkoutRepository(private val userDao: UserDao) {
+class WorkoutRepository(private val workoutDao: WorkoutDao) {
 
-    suspend fun registerUser(user: User) = userDao.insert(user)
-    suspend fun updateUser(user: User) = userDao.update(user)
-    suspend fun deleteUser(user: User) = userDao.delete(user)
+    suspend fun addWorkout(workout: Workout) = workoutDao.insert(workout)
+    suspend fun updateWorkout(workout: Workout) = workoutDao.update(workout)
+    suspend fun deleteWorkout(workout: Workout) = workoutDao.delete(workout)
 
-    fun getUser(id: Int): Flow<User> = userDao.getUser(id)
-    fun getAllUsers(): Flow<List<User>> = userDao.getAllUsers()
+    fun getWorkoutsForUser(userId: Int): Flow<List<Workout>> = workoutDao.getWorkoutsForUser(userId)
+    fun getAllWorkouts(): Flow<List<Workout>> = workoutDao.getAllWorkouts()
 }
