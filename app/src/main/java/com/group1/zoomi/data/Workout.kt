@@ -14,7 +14,7 @@ import androidx.room.PrimaryKey
         )
     ]
 )
-data class Workout {
+data class Workout(
     @PrimaryKey(autoGenerate = true)
     val workoutId: Int = 0,
     val userId: Int,
@@ -23,4 +23,4 @@ data class Workout {
     val duration: Int,
     val weatherInfo: String,
     val imagePath: String? = null
-}
+)

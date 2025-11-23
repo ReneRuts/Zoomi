@@ -9,19 +9,19 @@ import androidx.room.Update
 import kotlinx.coroutines.flow.Flow
 
 @Dao
-interface UserDao {
+interface WorkoutDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun insert(user: User)
+    suspend fun insert(workout: Workout)
 
     @Update
-    suspend fun update(user: User)
+    suspend fun update(workout: Workout)
 
     @Delete
-    suspend fun delete(user: User)
+    suspend fun delete(workout: Workout)
 
-    @Query("SELECT * FROM users WHERE userId = :id")
-    fun getUser(id : Int): Flow<User>
+    @Query("SELECT * FROM workouts WHERE userId = :userId ORDER BY workoutId DESC")
+    fun getWorkoutsForUser(userId : Int): Flow<List<Workout>>
 
-    @Query("SELECT * FROM users ORDER BY username ASC")
-    fun getAllUsers(): Flow<List<User>>
+    @Query("SELECT * FROM workouts ORDER BY workoutId DESC")
+    fun getAllWorkouts(): Flow<List<Workout>>
 }
