@@ -19,7 +19,7 @@ abstract class ZoomiDatabase : RoomDatabase() {
 
         fun getDatabase(context: Context): ZoomiDatabase {
             return Instance ?: synchronized(this){
-                Room.databaseBuilder(context, ZoomiDatabase::class.java,"zoomi_database")
+                Room.databaseBuilder(context.applicationContext, ZoomiDatabase::class.java,"zoomi_database")
                     .fallbackToDestructiveMigration()
                     .build()
                     .also { Instance = it }
