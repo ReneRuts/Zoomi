@@ -33,20 +33,19 @@ public class WorkoutDao_Impl(
   init {
     this.__db = __db
     this.__insertAdapterOfWorkout = object : EntityInsertAdapter<Workout>() {
-      protected override fun createQuery(): String = "INSERT OR IGNORE INTO `workouts` (`workoutId`,`userId`,`type`,`title`,`duration`,`weatherInfo`,`imagePath`) VALUES (nullif(?, 0),?,?,?,?,?,?)"
+      protected override fun createQuery(): String = "INSERT OR IGNORE INTO `workouts` (`workoutId`,`type`,`title`,`duration`,`weatherInfo`,`imagePath`) VALUES (nullif(?, 0),?,?,?,?,?)"
 
       protected override fun bind(statement: SQLiteStatement, entity: Workout) {
         statement.bindLong(1, entity.workoutId.toLong())
-        statement.bindLong(2, entity.userId.toLong())
-        statement.bindText(3, entity.type)
-        statement.bindText(4, entity.title)
-        statement.bindLong(5, entity.duration.toLong())
-        statement.bindText(6, entity.weatherInfo)
+        statement.bindText(2, entity.type)
+        statement.bindText(3, entity.title)
+        statement.bindLong(4, entity.duration.toLong())
+        statement.bindText(5, entity.weatherInfo)
         val _tmpImagePath: String? = entity.imagePath
         if (_tmpImagePath == null) {
-          statement.bindNull(7)
+          statement.bindNull(6)
         } else {
-          statement.bindText(7, _tmpImagePath)
+          statement.bindText(6, _tmpImagePath)
         }
       }
     }
@@ -58,22 +57,21 @@ public class WorkoutDao_Impl(
       }
     }
     this.__updateAdapterOfWorkout = object : EntityDeleteOrUpdateAdapter<Workout>() {
-      protected override fun createQuery(): String = "UPDATE OR ABORT `workouts` SET `workoutId` = ?,`userId` = ?,`type` = ?,`title` = ?,`duration` = ?,`weatherInfo` = ?,`imagePath` = ? WHERE `workoutId` = ?"
+      protected override fun createQuery(): String = "UPDATE OR ABORT `workouts` SET `workoutId` = ?,`type` = ?,`title` = ?,`duration` = ?,`weatherInfo` = ?,`imagePath` = ? WHERE `workoutId` = ?"
 
       protected override fun bind(statement: SQLiteStatement, entity: Workout) {
         statement.bindLong(1, entity.workoutId.toLong())
-        statement.bindLong(2, entity.userId.toLong())
-        statement.bindText(3, entity.type)
-        statement.bindText(4, entity.title)
-        statement.bindLong(5, entity.duration.toLong())
-        statement.bindText(6, entity.weatherInfo)
+        statement.bindText(2, entity.type)
+        statement.bindText(3, entity.title)
+        statement.bindLong(4, entity.duration.toLong())
+        statement.bindText(5, entity.weatherInfo)
         val _tmpImagePath: String? = entity.imagePath
         if (_tmpImagePath == null) {
-          statement.bindNull(7)
+          statement.bindNull(6)
         } else {
-          statement.bindText(7, _tmpImagePath)
+          statement.bindText(6, _tmpImagePath)
         }
-        statement.bindLong(8, entity.workoutId.toLong())
+        statement.bindLong(7, entity.workoutId.toLong())
       }
     }
   }
@@ -90,27 +88,23 @@ public class WorkoutDao_Impl(
     __updateAdapterOfWorkout.handle(_connection, workout)
   }
 
-  public override fun getWorkoutsForUser(userId: Int): Flow<List<Workout>> {
-    val _sql: String = "SELECT * FROM workouts WHERE userId = ? ORDER BY workoutId DESC"
+  public override fun getWorkout(workoutId: Int): Flow<Workout> {
+    val _sql: String = "SELECT * FROM workouts WHERE workoutId = ?"
     return createFlow(__db, false, arrayOf("workouts")) { _connection ->
       val _stmt: SQLiteStatement = _connection.prepare(_sql)
       try {
         var _argIndex: Int = 1
-        _stmt.bindLong(_argIndex, userId.toLong())
+        _stmt.bindLong(_argIndex, workoutId.toLong())
         val _columnIndexOfWorkoutId: Int = getColumnIndexOrThrow(_stmt, "workoutId")
-        val _columnIndexOfUserId: Int = getColumnIndexOrThrow(_stmt, "userId")
         val _columnIndexOfType: Int = getColumnIndexOrThrow(_stmt, "type")
         val _columnIndexOfTitle: Int = getColumnIndexOrThrow(_stmt, "title")
         val _columnIndexOfDuration: Int = getColumnIndexOrThrow(_stmt, "duration")
         val _columnIndexOfWeatherInfo: Int = getColumnIndexOrThrow(_stmt, "weatherInfo")
         val _columnIndexOfImagePath: Int = getColumnIndexOrThrow(_stmt, "imagePath")
-        val _result: MutableList<Workout> = mutableListOf()
-        while (_stmt.step()) {
-          val _item: Workout
+        val _result: Workout
+        if (_stmt.step()) {
           val _tmpWorkoutId: Int
           _tmpWorkoutId = _stmt.getLong(_columnIndexOfWorkoutId).toInt()
-          val _tmpUserId: Int
-          _tmpUserId = _stmt.getLong(_columnIndexOfUserId).toInt()
           val _tmpType: String
           _tmpType = _stmt.getText(_columnIndexOfType)
           val _tmpTitle: String
@@ -125,8 +119,9 @@ public class WorkoutDao_Impl(
           } else {
             _tmpImagePath = _stmt.getText(_columnIndexOfImagePath)
           }
-          _item = Workout(_tmpWorkoutId,_tmpUserId,_tmpType,_tmpTitle,_tmpDuration,_tmpWeatherInfo,_tmpImagePath)
-          _result.add(_item)
+          _result = Workout(_tmpWorkoutId,_tmpType,_tmpTitle,_tmpDuration,_tmpWeatherInfo,_tmpImagePath)
+        } else {
+          error("The query result was empty, but expected a single row to return a NON-NULL object of type 'com.group1.zoomi.`data`.Workout'.")
         }
         _result
       } finally {
@@ -141,7 +136,6 @@ public class WorkoutDao_Impl(
       val _stmt: SQLiteStatement = _connection.prepare(_sql)
       try {
         val _columnIndexOfWorkoutId: Int = getColumnIndexOrThrow(_stmt, "workoutId")
-        val _columnIndexOfUserId: Int = getColumnIndexOrThrow(_stmt, "userId")
         val _columnIndexOfType: Int = getColumnIndexOrThrow(_stmt, "type")
         val _columnIndexOfTitle: Int = getColumnIndexOrThrow(_stmt, "title")
         val _columnIndexOfDuration: Int = getColumnIndexOrThrow(_stmt, "duration")
@@ -152,8 +146,6 @@ public class WorkoutDao_Impl(
           val _item: Workout
           val _tmpWorkoutId: Int
           _tmpWorkoutId = _stmt.getLong(_columnIndexOfWorkoutId).toInt()
-          val _tmpUserId: Int
-          _tmpUserId = _stmt.getLong(_columnIndexOfUserId).toInt()
           val _tmpType: String
           _tmpType = _stmt.getText(_columnIndexOfType)
           val _tmpTitle: String
@@ -168,7 +160,7 @@ public class WorkoutDao_Impl(
           } else {
             _tmpImagePath = _stmt.getText(_columnIndexOfImagePath)
           }
-          _item = Workout(_tmpWorkoutId,_tmpUserId,_tmpType,_tmpTitle,_tmpDuration,_tmpWeatherInfo,_tmpImagePath)
+          _item = Workout(_tmpWorkoutId,_tmpType,_tmpTitle,_tmpDuration,_tmpWeatherInfo,_tmpImagePath)
           _result.add(_item)
         }
         _result
