@@ -24,4 +24,8 @@ interface WorkoutDao {
 
     @Query("SELECT * FROM workouts ORDER BY workoutId DESC")
     fun getAllWorkouts(): Flow<List<Workout>>
+
+    // This is to be able to create testdata, not used otherwise
+    @Query("DELETE FROM workouts")
+    suspend fun clearAll()
 }

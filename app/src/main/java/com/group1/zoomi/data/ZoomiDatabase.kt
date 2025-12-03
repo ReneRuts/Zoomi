@@ -12,13 +12,16 @@ import androidx.room.RoomDatabase
 )
 abstract class ZoomiDatabase : RoomDatabase() {
     abstract fun workoutDao(): WorkoutDao
-    companion object{
+
+    companion object {
         @Volatile
         private var Instance: ZoomiDatabase? = null
 
         fun getDatabase(context: Context): ZoomiDatabase {
-            return Instance ?: synchronized(this){
-                Room.databaseBuilder(context.applicationContext, ZoomiDatabase::class.java,"zoomi_database")
+            return Instance ?: synchronized(this) {
+                Room.databaseBuilder(
+                    context.applicationContext, ZoomiDatabase::class.java, "zoomi_database"
+                )
                     .fallbackToDestructiveMigration()
                     .build()
                     .also { Instance = it }

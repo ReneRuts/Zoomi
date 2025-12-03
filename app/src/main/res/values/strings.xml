@@ -2,8 +2,8 @@
     <string name="app_name">Zoomi</string>
     <string name="login_button">login</string>
     <string name="add_workout">Add new Workout</string>
-    <string name="Workout1">Short Run</string>
-    <string name="Workout2">Short Run</string>
-    <string name="Workout3">Short Run</string>
-    <string name="Workout4">Short Run</string>
+    <string name="save_workout">Save Workout</string>
+    <string name="workout_title_required">Workout title is required</string>
+    <string name="workout_type_required">Workout type is required</string>
+    <string name="workout_duration_required">Workout duration is required</string>
 </resources>

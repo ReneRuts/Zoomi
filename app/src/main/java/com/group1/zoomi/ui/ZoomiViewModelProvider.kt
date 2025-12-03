@@ -6,11 +6,16 @@ import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.group1.zoomi.ZoomiApplication
 import com.group1.zoomi.ui.home.OverviewViewModel
+import com.group1.zoomi.ui.workout.WorkoutEntryViewModel
 
 object ZoomiViewModelProvider {
     val Factory = viewModelFactory {
         initializer {
             OverviewViewModel(zoomiApplication().container.workoutsRepository)
+        }
+
+        initializer {
+            WorkoutEntryViewModel(zoomiApplication().container.workoutsRepository)
         }
     }
 }
