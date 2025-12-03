@@ -20,7 +20,7 @@ interface WorkoutDao {
     suspend fun delete(workout: Workout)
 
     @Query("SELECT * FROM workouts WHERE workoutId = :workoutId")
-    fun getWorkout(workoutId : Int): Flow<List<Workout>>
+    fun getWorkout(workoutId : Int): Flow<Workout>
 
     @Query("SELECT * FROM workouts ORDER BY workoutId DESC")
     fun getAllWorkouts(): Flow<List<Workout>>

@@ -5,6 +5,7 @@ import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "workouts")
+
 data class Workout(
     @PrimaryKey(autoGenerate = true)
     val workoutId: Int = 0,
