@@ -25,21 +25,31 @@ class WorkoutEntryViewModel(private val workoutsRepository: WorkoutsRepository) 
         val workoutId: Int = 0,
         val type: String = "",
         val title: String = "",
-        val duration: String = "",
+        val durationHours: String = "",
+        val durationMinutes: String = "",
         val weatherInfo: String = "",
         val imagePath: String? = null
     ) {
         fun isValid(): Boolean {
-            return type.isNotBlank() && title.isNotBlank() && duration.isNotBlank()
+            return type.isNotBlank()
+                    && title.isNotBlank()
+                    && durationHours.isNotBlank()
+                    && durationMinutes.isNotBlank()
         }
 
-        fun toWorkout(): Workout = Workout(
-            workoutId = workoutId,
-            type = type,
-            title = title,
-            duration = duration.toIntOrNull() ?: 0,
-            weatherInfo = weatherInfo,
-            imagePath = imagePath
-        )
+        fun toWorkout(): Workout {
+            val hours = durationHours.toIntOrNull() ?: 0
+            val minutes = durationMinutes.toIntOrNull() ?: 0
+
+            return Workout(
+                workoutId = workoutId,
+                type = type,
+                title = title,
+                durationHours = hours.coerceIn(0,23),
+                durationMinutes = minutes.coerceIn(0,59),
+                weatherInfo = weatherInfo,
+                imagePath = imagePath
+            )
+        }
     }
 }
