@@ -21,31 +21,31 @@
 16
 17    <application
 17-->C:\Users\gielv\AndroidStudioProjects\zoomi\app\src\main\AndroidManifest.xml:5:5-25:19
-18        android:allowBackup="true"
-18-->C:\Users\gielv\AndroidStudioProjects\zoomi\app\src\main\AndroidManifest.xml:6:9-35
-19        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
-19-->[androidx.core:core:1.17.0] C:\Users\gielv\.gradle\caches\8.13\transforms\68279bfb58e2377c93489649d67e2f03\transformed\core-1.17.0\AndroidManifest.xml:28:18-86
-20        android:dataExtractionRules="@xml/data_extraction_rules"
-20-->C:\Users\gielv\AndroidStudioProjects\zoomi\app\src\main\AndroidManifest.xml:7:9-65
-21        android:debuggable="true"
-22        android:extractNativeLibs="false"
-23        android:fullBackupContent="@xml/backup_rules"
-23-->C:\Users\gielv\AndroidStudioProjects\zoomi\app\src\main\AndroidManifest.xml:8:9-54
-24        android:icon="@mipmap/ic_launcher"
-24-->C:\Users\gielv\AndroidStudioProjects\zoomi\app\src\main\AndroidManifest.xml:9:9-43
-25        android:label="@string/app_name"
-25-->C:\Users\gielv\AndroidStudioProjects\zoomi\app\src\main\AndroidManifest.xml:10:9-41
-26        android:roundIcon="@mipmap/ic_launcher_round"
-26-->C:\Users\gielv\AndroidStudioProjects\zoomi\app\src\main\AndroidManifest.xml:11:9-54
-27        android:supportsRtl="true"
-27-->C:\Users\gielv\AndroidStudioProjects\zoomi\app\src\main\AndroidManifest.xml:12:9-35
-28        android:testOnly="true"
-29        android:theme="@style/Theme.Zoomi" >
-29-->C:\Users\gielv\AndroidStudioProjects\zoomi\app\src\main\AndroidManifest.xml:13:9-43
+18        android:name="com.group1.zoomi.ZoomiApplication"
+18-->C:\Users\gielv\AndroidStudioProjects\zoomi\app\src\main\AndroidManifest.xml:13:9-41
+19        android:allowBackup="true"
+19-->C:\Users\gielv\AndroidStudioProjects\zoomi\app\src\main\AndroidManifest.xml:6:9-35
+20        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+20-->[androidx.core:core:1.17.0] C:\Users\gielv\.gradle\caches\8.13\transforms\68279bfb58e2377c93489649d67e2f03\transformed\core-1.17.0\AndroidManifest.xml:28:18-86
+21        android:dataExtractionRules="@xml/data_extraction_rules"
+21-->C:\Users\gielv\AndroidStudioProjects\zoomi\app\src\main\AndroidManifest.xml:7:9-65
+22        android:debuggable="true"
+23        android:extractNativeLibs="false"
+24        android:fullBackupContent="@xml/backup_rules"
+24-->C:\Users\gielv\AndroidStudioProjects\zoomi\app\src\main\AndroidManifest.xml:8:9-54
+25        android:icon="@mipmap/ic_launcher"
+25-->C:\Users\gielv\AndroidStudioProjects\zoomi\app\src\main\AndroidManifest.xml:9:9-43
+26        android:label="@string/app_name"
+26-->C:\Users\gielv\AndroidStudioProjects\zoomi\app\src\main\AndroidManifest.xml:10:9-41
+27        android:roundIcon="@mipmap/ic_launcher_round"
+27-->C:\Users\gielv\AndroidStudioProjects\zoomi\app\src\main\AndroidManifest.xml:11:9-54
+28        android:supportsRtl="true"
+28-->C:\Users\gielv\AndroidStudioProjects\zoomi\app\src\main\AndroidManifest.xml:12:9-35
+29        android:testOnly="true" >
 30        <activity
 30-->C:\Users\gielv\AndroidStudioProjects\zoomi\app\src\main\AndroidManifest.xml:14:9-24:20
 31            android:name="com.group1.zoomi.MainActivity"
-31-->C:\Users\gielv\AndroidStudioProjects\zoomi\app\src\main\AndroidManifest.xml:15:13-41
+31-->C:\Users\gielv\AndroidStudioProjects\zoomi\app\src\main\AndroidManifest.xml:15:13-57
 32            android:exported="true"
 32-->C:\Users\gielv\AndroidStudioProjects\zoomi\app\src\main\AndroidManifest.xml:16:13-36
 33            android:label="@string/app_name"

@@ -5,7 +5,9 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.group1.zoomi.ui.screens.LoginScreen
-import com.group1.zoomi.ui.screens.OverviewScreen
+import com.group1.zoomi.ui.home.OverviewScreen
+import com.group1.zoomi.ui.workout.WorkoutEntryScreen
+
 //import com.group1.zoomi.ui.screens.DetailsScreen
 
 
@@ -33,19 +35,20 @@ fun AppNavigation() {
                     navController.navigate("login") {
                         popUpTo("overview") { inclusive = true}
                     }
+                },
+                onAddWorkoutClick = {
+                    navController.navigate("addWorkout")
                 }
-
-//                getDetails = {
-//                    navController.navigate("details") {
-//                        popUpTo("overview") {inclusive = true}
-//                    }
-//                }
             )
         }
-
-//        composable("details") {
-//            DetailsScreen()
-    //
-//        }
+        composable("addWorkout") {
+            WorkoutEntryScreen(
+                navigateBack = {
+                    navController.navigate("overview") {
+                        popUpTo("addWorkout") { inclusive = true }
+                    }
+                }
+            )
+        }
     }
 }

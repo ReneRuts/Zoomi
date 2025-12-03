@@ -924,6 +924,7 @@ int drawable btn_radio_off_mtrl 0x7f06005b
 int drawable btn_radio_off_to_on_mtrl_animation 0x7f06005c
 int drawable btn_radio_on_mtrl 0x7f06005d
 int drawable btn_radio_on_to_off_mtrl_animation 0x7f06005e
+int drawable default_workout 0x7f060078
 int drawable ic_call_answer 0x7f06005f
 int drawable ic_call_answer_low 0x7f060060
 int drawable ic_call_answer_video 0x7f060061
@@ -948,7 +949,7 @@ int drawable notify_panel_notification_icon_bg 0x7f060073
 int drawable tooltip_frame_dark 0x7f060074
 int drawable tooltip_frame_light 0x7f060075
 int drawable umizoomi_bot 0x7f060076
-int drawable workout 0x7f060077
+int drawable weight_training 0x7f060079
 int id ALT 0x7f070000
 int id CTRL 0x7f070001
 int id FUNCTION 0x7f070002
@@ -1334,10 +1335,6 @@ int layout select_dialog_singlechoice_material 0x7f0a0027
 int layout support_simple_spinner_dropdown_item 0x7f0a0028
 int mipmap ic_launcher 0x7f0b0000
 int mipmap ic_launcher_round 0x7f0b0001
-int string Workout1 0x7f0c0000
-int string Workout2 0x7f0c0001
-int string Workout3 0x7f0c0002
-int string Workout4 0x7f0c0003
 int string abc_action_bar_home_description 0x7f0c0004
 int string abc_action_bar_up_description 0x7f0c0005
 int string abc_action_menu_overflow_description 0x7f0c0006
@@ -1384,6 +1381,7 @@ int string dropdown_menu 0x7f0c002e
 int string in_progress 0x7f0c002f
 int string indeterminate 0x7f0c0030
 int string login_button 0x7f0c0031
+int string logout_button 0x7f0c007f
 int string m3c_bottom_sheet_collapse_description 0x7f0c0032
 int string m3c_bottom_sheet_dismiss_description 0x7f0c0033
 int string m3c_bottom_sheet_drag_handle_description 0x7f0c0034
@@ -1445,6 +1443,7 @@ int string navigation_menu 0x7f0c006b
 int string not_selected 0x7f0c006c
 int string range_end 0x7f0c006d
 int string range_start 0x7f0c006e
+int string save_workout 0x7f0c007b
 int string search_menu_title 0x7f0c006f
 int string selected 0x7f0c0070
 int string snackbar_pane_title 0x7f0c0071
@@ -1457,6 +1456,9 @@ int string tab 0x7f0c0077
 int string template_percent 0x7f0c0078
 int string tooltip_description 0x7f0c0079
 int string tooltip_label 0x7f0c007a
+int string workout_duration_required 0x7f0c007c
+int string workout_title_required 0x7f0c007d
+int string workout_type_required 0x7f0c007e
 int style AlertDialog_AppCompat 0x7f0d0000
 int style AlertDialog_AppCompat_Light 0x7f0d0001
 int style Animation_AppCompat_Dialog 0x7f0d0002
