@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "com.group1.zoomi.app-mergeDebugResources-49:/values-night-v8/values-night-v8.xml",
+            "outputFile": "com.group1.zoomi.app-mergeDebugResources-44:/values-night-v8/values-night-v8.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\Rener\\.gradle\\caches\\8.13\\transforms\\a1dbfb567e21e2fdb850c6d41975c751\\transformed\\appcompat-1.2.0\\res\\values-night-v8\\values-night-v8.xml",
+                    "source": "C:\\Users\\gielv\\.gradle\\caches\\8.13\\transforms\\11313bf68d57daf8dea8274032b09978\\transformed\\appcompat-1.2.0\\res\\values-night-v8\\values-night-v8.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8,9",
                         "startColumns": "4,4,4,4,4,4,4,4",

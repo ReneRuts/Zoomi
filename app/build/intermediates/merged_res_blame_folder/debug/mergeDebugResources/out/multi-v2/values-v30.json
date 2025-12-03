@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "com.group1.zoomi.app-mergeDebugResources-49:/values-v30/values-v30.xml",
+            "outputFile": "com.group1.zoomi.app-mergeDebugResources-44:/values-v30/values-v30.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\Rener\\.gradle\\caches\\8.13\\transforms\\7d4ef84659cf83248c5e94a7e60ae6a6\\transformed\\material3-release\\res\\values-v30\\values-v30.xml",
+                    "source": "C:\\Users\\gielv\\.gradle\\caches\\8.13\\transforms\\3da0987c7799624854b5b2f2187c8cac\\transformed\\material3-release\\res\\values-v30\\values-v30.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",
