@@ -25,7 +25,8 @@ class ZoomiApplication : Application() {
                     type = "Running",
                     title = "Morning Park Run",
                     duration = 30,
-                    weatherInfo = "15°C, Sunny"
+                    weatherInfo = "15°C, Sunny",
+                    imagePath = null
                 )
             )
             workoutDao.insert(
@@ -33,7 +34,8 @@ class ZoomiApplication : Application() {
                     type = "Weightlifting",
                     title = "Full Body Strength",
                     duration = 60,
-                    weatherInfo = "Indoors"
+                    weatherInfo = "Indoors",
+                    imagePath = null
                 )
             )
             workoutDao.insert(
@@ -41,7 +43,8 @@ class ZoomiApplication : Application() {
                     type = "Yoga",
                     title = "Evening Relaxation",
                     duration = 45,
-                    weatherInfo = "Indoors"
+                    weatherInfo = "Indoors",
+                    imagePath = null
                 )
             )
         }

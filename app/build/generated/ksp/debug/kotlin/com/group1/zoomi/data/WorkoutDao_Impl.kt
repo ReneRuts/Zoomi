@@ -88,13 +88,13 @@ public class WorkoutDao_Impl(
     __updateAdapterOfWorkout.handle(_connection, workout)
   }
 
-  public override fun getWorkout(id: Int): Flow<Workout> {
+  public override fun getWorkout(workoutId: Int): Flow<Workout> {
     val _sql: String = "SELECT * FROM workouts WHERE workoutId = ?"
     return createFlow(__db, false, arrayOf("workouts")) { _connection ->
       val _stmt: SQLiteStatement = _connection.prepare(_sql)
       try {
         var _argIndex: Int = 1
-        _stmt.bindLong(_argIndex, id.toLong())
+        _stmt.bindLong(_argIndex, workoutId.toLong())
         val _columnIndexOfWorkoutId: Int = getColumnIndexOrThrow(_stmt, "workoutId")
         val _columnIndexOfType: Int = getColumnIndexOrThrow(_stmt, "type")
         val _columnIndexOfTitle: Int = getColumnIndexOrThrow(_stmt, "title")

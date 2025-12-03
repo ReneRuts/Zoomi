@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Zoomi</string>
     <string name="login_button">login</string>
+    <string name="logout_button">Logout</string>
     <string name="add_workout">Add new Workout</string>
     <string name="save_workout">Save Workout</string>
     <string name="workout_title_required">Workout title is required</string>

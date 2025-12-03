@@ -30,7 +30,7 @@ class WorkoutEntryViewModel(private val workoutsRepository: WorkoutsRepository) 
         val imagePath: String? = null
     ) {
         fun isValid(): Boolean {
-            return type.isNotBlank() && title.isNotBlank() && duration.isNotBlank() && weatherInfo.isNotBlank()
+            return type.isNotBlank() && title.isNotBlank() && duration.isNotBlank()
         }
 
         fun toWorkout(): Workout = Workout(

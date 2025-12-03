@@ -2,6 +2,7 @@ package com.group1.zoomi.ui.home
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -63,13 +64,10 @@ fun OverviewScreen(
 fun WorkoutCard(workout: Workout, modifier: Modifier = Modifier) {
     Card(modifier = modifier.padding(8.dp)) {
         Column {
-            Image(
-                painter = painterResource(R.drawable.default_workout),
-                contentDescription = workout.title,
+            Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(194.dp),
-                contentScale = ContentScale.Crop
+                    .height(194.dp)
             )
             Text(
                 text = workout.title,
@@ -95,7 +93,7 @@ fun HeaderUi(onLogout: () -> Unit, modifier: Modifier = Modifier) {
             modifier = Modifier.size(72.dp)
         )
         Button(onClick = { onLogout() }, modifier = Modifier.padding(start = 16.dp)) {
-            Text(stringResource(R.string.login_button))
+            Text(stringResource(R.string.logout_button))
         }
     }
 }

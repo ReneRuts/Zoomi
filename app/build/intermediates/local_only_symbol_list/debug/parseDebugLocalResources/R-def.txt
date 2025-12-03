@@ -17,6 +17,7 @@ mipmap ic_launcher_round
 string add_workout
 string app_name
 string login_button
+string logout_button
 string save_workout
 string workout_duration_required
 string workout_title_required

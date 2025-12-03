@@ -124,10 +124,10 @@ MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] C:\Users\gi
 		ADDED from C:\Users\gielv\AndroidStudioProjects\zoomi\app\src\main\AndroidManifest.xml:9:9-43
 	android:allowBackup
 		ADDED from C:\Users\gielv\AndroidStudioProjects\zoomi\app\src\main\AndroidManifest.xml:6:9-35
-	android:theme
-		ADDED from C:\Users\gielv\AndroidStudioProjects\zoomi\app\src\main\AndroidManifest.xml:13:9-43
 	android:dataExtractionRules
 		ADDED from C:\Users\gielv\AndroidStudioProjects\zoomi\app\src\main\AndroidManifest.xml:7:9-65
+	android:name
+		ADDED from C:\Users\gielv\AndroidStudioProjects\zoomi\app\src\main\AndroidManifest.xml:13:9-41
 activity#com.group1.zoomi.MainActivity
 ADDED from C:\Users\gielv\AndroidStudioProjects\zoomi\app\src\main\AndroidManifest.xml:14:9-24:20
 	android:label
@@ -137,7 +137,7 @@ ADDED from C:\Users\gielv\AndroidStudioProjects\zoomi\app\src\main\AndroidManife
 	android:theme
 		ADDED from C:\Users\gielv\AndroidStudioProjects\zoomi\app\src\main\AndroidManifest.xml:18:13-47
 	android:name
-		ADDED from C:\Users\gielv\AndroidStudioProjects\zoomi\app\src\main\AndroidManifest.xml:15:13-41
+		ADDED from C:\Users\gielv\AndroidStudioProjects\zoomi\app\src\main\AndroidManifest.xml:15:13-57
 intent-filter#action:name:android.intent.action.MAIN+category:name:android.intent.category.LAUNCHER
 ADDED from C:\Users\gielv\AndroidStudioProjects\zoomi\app\src\main\AndroidManifest.xml:19:13-23:29
 action#android.intent.action.MAIN
