@@ -33,7 +33,7 @@ import com.group1.zoomi.ui.ZoomiViewModelProvider
 fun OverviewScreen(
     modifier: Modifier = Modifier,
     onLogout: () -> Unit,
-    onAddWorkoutClick: () -> Unit, // New parameter
+    onAddWorkoutClick: () -> Unit,
     overviewViewModel: OverviewViewModel = viewModel(factory = ZoomiViewModelProvider.Factory)
 ) {
 
@@ -54,7 +54,7 @@ fun OverviewScreen(
         }
 
         // 🔹 Static footer
-        FooterUi(onAddWorkoutClick = onAddWorkoutClick) // Pass the function down
+        FooterUi(onAddWorkoutClick = onAddWorkoutClick)
     }
 }
 
@@ -101,9 +101,9 @@ fun HeaderUi(onLogout: () -> Unit, modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun FooterUi(modifier: Modifier = Modifier, onAddWorkoutClick: () -> Unit) { // New parameter
+fun FooterUi(modifier: Modifier = Modifier, onAddWorkoutClick: () -> Unit) {
     Button(
-        onClick = { onAddWorkoutClick() }, // Use the function
+        onClick = { onAddWorkoutClick() },
         modifier = modifier
             .fillMaxWidth()
             .padding(16.dp)
