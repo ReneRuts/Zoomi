@@ -26,7 +26,7 @@ class ZoomiApplication : Application() {
                     title = "Morning Park Run",
                     duration = 30,
                     weatherInfo = "15°C, Sunny",
-                    imagePath = null
+                    imagePath = "test"
                 )
             )
             workoutDao.insert(
