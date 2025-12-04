@@ -2,7 +2,6 @@ package com.group1.zoomi.ui.home
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -106,12 +105,17 @@ fun HeaderUi(onLogout: () -> Unit, modifier: Modifier = Modifier) {
             .fillMaxWidth()
             .padding(24.dp)
             .statusBarsPadding(),
-        horizontalArrangement = Arrangement.SpaceBetween
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically
     ) {
         Image(
             painter = painterResource(R.drawable.umizoomi_bot),
             contentDescription = "robot picture",
             modifier = Modifier.size(72.dp)
+        )
+        Text(
+            text = "15°C, Sunny",
+            style = MaterialTheme.typography.titleMedium
         )
         Button(onClick = { onLogout() }, modifier = Modifier.padding(start = 16.dp)) {
             Text(stringResource(R.string.logout_button))
