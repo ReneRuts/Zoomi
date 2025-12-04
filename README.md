@@ -16,20 +16,20 @@ We have made a workout tracker application. In the app you can add workouts, rev
 - :hourglass: = Work in progress
 
  
-|Status|Description|Details|
-|---|---|---|
-|| **Application** || 
-|:hourglass:| 2 UI screens 
-|:hourglass:| Secure API request
-|:hourglass:| API request with IDOR
-|:heavy_check_mark:| Connection to room database
-|:x:| Secure storage
-||  || 
-|| **Security** || 
-|:x| Unsafe storage
-|:x:| Malware
-|:hourglass:| Frida functionality
-|:x:| Detect root and block functionality
+| Status             |Description|Details|
+|--------------------|---|---|
+|                    | **Application** || 
+| :hourglass:        | 2 UI screens 
+| :hourglass:        | Secure API request
+| :hourglass:        | API request with IDOR
+| :heavy_check_mark: | Connection to room database
+| :x:                | Secure storage
+|                    |  || 
+|                    | **Security** || 
+| :x:                | Unsafe storage
+| :x:                | Malware
+| :x:                | Frida functionality
+| :x:                | Detect root and block functionality
 
 
 ## Overview app
