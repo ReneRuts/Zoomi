@@ -8,4 +8,5 @@
     <string name="workout_type_required">Workout type is required</string>
     <string name="workout_duration_hours">Hours</string>
     <string name="workout_duration_minutes">Minutes</string>
+    <string name="back_button">Back</string>
 </resources>
