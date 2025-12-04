@@ -6,5 +6,6 @@
     <string name="save_workout">Save Workout</string>
     <string name="workout_title_required">Workout title is required</string>
     <string name="workout_type_required">Workout type is required</string>
-    <string name="workout_duration_required">Workout duration is required</string>
+    <string name="workout_duration_hours">Hours</string>
+    <string name="workout_duration_minutes">Minutes</string>
 </resources>

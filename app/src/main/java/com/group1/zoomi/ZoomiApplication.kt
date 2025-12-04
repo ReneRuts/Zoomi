@@ -24,7 +24,8 @@ class ZoomiApplication : Application() {
                 Workout(
                     type = "Running",
                     title = "Morning Park Run",
-                    duration = 30,
+                    durationHours = 12,
+                    durationMinutes = 30,
                     weatherInfo = "15°C, Sunny",
                     imagePath = "test"
                 )
@@ -33,7 +34,8 @@ class ZoomiApplication : Application() {
                 Workout(
                     type = "Weightlifting",
                     title = "Full Body Strength",
-                    duration = 60,
+                    durationHours = 0,
+                    durationMinutes = 15,
                     weatherInfo = "Indoors",
                     imagePath = null
                 )
@@ -42,7 +44,8 @@ class ZoomiApplication : Application() {
                 Workout(
                     type = "Yoga",
                     title = "Evening Relaxation",
-                    duration = 45,
+                    durationHours = 0,
+                    durationMinutes = 45,
                     weatherInfo = "Indoors",
                     imagePath = null
                 )

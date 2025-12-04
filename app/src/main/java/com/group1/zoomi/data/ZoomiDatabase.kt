@@ -7,7 +7,7 @@ import androidx.room.RoomDatabase
 
 @Database(
     entities = [Workout::class],
-    version = 1,
+    version = 2, //number 2 because of the change from duration to durationHours & durationMinutes
     exportSchema = false
 )
 abstract class ZoomiDatabase : RoomDatabase() {
