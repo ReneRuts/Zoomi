@@ -11,7 +11,10 @@ import com.group1.zoomi.ui.workout.WorkoutEntryViewModel
 object ZoomiViewModelProvider {
     val Factory = viewModelFactory {
         initializer {
-            OverviewViewModel(zoomiApplication().container.workoutsRepository)
+            OverviewViewModel(
+                zoomiApplication().container.workoutsRepository,
+                zoomiApplication().container.locationRepository
+            )
         }
 
         initializer {
