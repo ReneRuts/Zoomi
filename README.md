@@ -18,18 +18,18 @@ We have made a workout tracker application. In the app you can add workouts, rev
  
 | Status             |Description|Details|
 |--------------------|---|---|
-|                    | **Application** || 
-| :hourglass:        | 2 UI screens 
-| :hourglass:        | Secure API request
-| :hourglass:        | API request with IDOR
-| :heavy_check_mark: | Connection to room database
-| :x:                | Secure storage
+| :hourglass:        | **Application** || 
+| :hourglass:        | 2 UI screens | dylan, gerbe |
+| :hourglass:        | Secure API request | rene |
+| :hourglass:        | API request with IDOR | rene |
+| :heavy_check_mark: | Connection to room database |  |
+| :x:                | Secure storage | |
 |                    |  || 
-|                    | **Security** || 
-| :x:                | Unsafe storage
-| :x:                | Malware
-| :x:                | Frida functionality
-| :x:                | Detect root and block functionality
+| :hourglass:        | **Security** || 
+| :x:                | Unsafe storage | gerbe |
+| :x:                | Malware | dylan |
+| :x:                | Frida functionality | gerbe |
+| :x:                | Detect root and block functionality | giel |
 
 
 ## Overview app
