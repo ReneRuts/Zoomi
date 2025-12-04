@@ -64,10 +64,17 @@ fun OverviewScreen(
 fun WorkoutCard(workout: Workout, modifier: Modifier = Modifier) {
     Card(modifier = modifier.padding(8.dp)) {
         Column {
-            Box(
+            Image(
+                painter = if (workout.imagePath != null) {
+                    painterResource(R.drawable.weight_training)
+                } else {
+                    painterResource(R.drawable.default_workout)
+                },
+                contentDescription = workout.title,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(194.dp)
+                    .height(194.dp),
+                contentScale = ContentScale.Crop
             )
             Text(
                 text = workout.title,
