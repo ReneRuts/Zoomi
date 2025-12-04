@@ -5,10 +5,13 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.group1.zoomi.ui.theme.ZoomiTheme
+import com.scottyab.rootbeer.RootBeer
+
 
 @Composable
 fun LoginScreen(
@@ -16,6 +19,8 @@ fun LoginScreen(
 ) {
     var username by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
+    var errorMessage by remember { mutableStateOf("") }
+    val context = LocalContext.current
 
     Column(
         modifier = Modifier
@@ -48,10 +53,26 @@ fun LoginScreen(
             modifier = Modifier.fillMaxWidth()
         )
 
+        if (errorMessage.isNotEmpty()) {
+            Spacer(modifier = Modifier.height(8.dp))
+            Text(
+                text = errorMessage,
+                color = MaterialTheme.colorScheme.error,
+                style = MaterialTheme.typography.bodySmall
+            )
+        }
+
         Spacer(modifier = Modifier.height(24.dp))
 
         Button(
-            onClick = { onLoginSuccess() },
+            onClick = {
+                val rootBeer = RootBeer(context)
+                if (rootBeer.isRooted) {
+                    errorMessage = "ELA ROOT ZIJN MAG NIET EH."
+                } else {
+                    onLoginSuccess()
+                }
+            },
             modifier = Modifier.fillMaxWidth()
         ) {
             Text("Login")
@@ -62,6 +83,7 @@ fun LoginScreen(
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun LoginScreenPreview() {
-    LoginScreen(onLoginSuccess = {})
+    ZoomiTheme {
+        LoginScreen(onLoginSuccess = {})
+    }
 }
-
