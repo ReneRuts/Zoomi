@@ -18,7 +18,10 @@ object ZoomiViewModelProvider {
         }
 
         initializer {
-            WorkoutEntryViewModel(zoomiApplication().container.workoutsRepository)
+            WorkoutEntryViewModel(
+                workoutsRepository = zoomiApplication().container.workoutsRepository,
+                locationRepository = zoomiApplication().container.locationRepository
+                )
         }
     }
 }
