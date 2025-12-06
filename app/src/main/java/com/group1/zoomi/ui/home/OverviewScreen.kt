@@ -140,7 +140,7 @@ fun HeaderUi(onLogout: () -> Unit, weather: WeatherData?, modifier: Modifier = M
                 "${weather.currentWeather.temperature}°C\n" +
                         "${weather.currentWeather.windspeed} km/h"
             } else {
-                "Loading weather..."
+                stringResource(R.string.weather_loading)
             },
             style = MaterialTheme.typography.titleMedium
         )

@@ -32,7 +32,7 @@ class WorkoutEntryViewModel(
             location?.let {
                 // this is an unsecure call to the API because the user can intercept and change the data
                 val weatherData = WeatherApi.retrofitService.getWeather(it.latitude, it.longitude)
-                val weatherString = "${weatherData.currentWeather.temperature}°C\n${weatherData.currentWeather.windspeed} km/h"
+                val weatherString = "${weatherData.currentWeather.temperature}°C  ${weatherData.currentWeather.windspeed} km/h"
                 updateUiState(workoutUiState.copy(weatherInfo = weatherString))
             }
         }
