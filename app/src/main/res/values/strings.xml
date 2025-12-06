@@ -9,4 +9,5 @@
     <string name="workout_duration_hours">Hours</string>
     <string name="workout_duration_minutes">Minutes</string>
     <string name="back_button">Back</string>
+    <string name="current_weather">Current weather</string>
 </resources>
