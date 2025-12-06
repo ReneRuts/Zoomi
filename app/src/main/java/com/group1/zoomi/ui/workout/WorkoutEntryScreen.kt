@@ -145,5 +145,18 @@ fun WorkoutInputForm(
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
             )
         }
+        if (workoutUiState.weatherInfo.isNotBlank()) {
+            Column {
+                Text(
+                    text = stringResource(R.string.current_weather),
+                    style = MaterialTheme.typography.labelMedium,
+                    modifier = Modifier.padding(bottom = 4.dp)
+                )
+                Text(
+                    text = workoutUiState.weatherInfo,
+                    style = MaterialTheme.typography.bodyLarge
+                )
+            }
+        }
     }
 }
