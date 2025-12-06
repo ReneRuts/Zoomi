@@ -23,6 +23,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.group1.zoomi.R
@@ -41,7 +42,7 @@ fun WorkoutEntryScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text(stringResource(R.string.add_workout)) },
+                title = { Text(stringResource(R.string.add_new_workout)) },
                 colors = TopAppBarDefaults.topAppBarColors(
                     containerColor = MaterialTheme.colorScheme.primaryContainer,
                     titleContentColor = MaterialTheme.colorScheme.onPrimaryContainer
@@ -109,6 +110,10 @@ fun WorkoutInputForm(
         modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
+        Text(
+            text = stringResource(R.string.workout_title),
+            style = MaterialTheme.typography.titleLarge
+        )
         OutlinedTextField(
             value = workoutUiState.title,
             onValueChange = { onValueChange(workoutUiState.copy(title = it)) },
@@ -117,6 +122,10 @@ fun WorkoutInputForm(
             enabled = enabled,
             singleLine = true
         )
+        Text(
+            text = stringResource(R.string.workout_type),
+            style = MaterialTheme.typography.titleLarge
+        )
         OutlinedTextField(
             value = workoutUiState.type,
             onValueChange = { onValueChange(workoutUiState.copy(type = it)) },
@@ -124,6 +133,10 @@ fun WorkoutInputForm(
             modifier = Modifier.fillMaxWidth(),
             enabled = enabled,
             singleLine = true
+        )
+        Text(
+            text = stringResource(R.string.workout_duration),
+            style = MaterialTheme.typography.titleLarge
         )
         Row(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
             OutlinedTextField(
@@ -148,8 +161,8 @@ fun WorkoutInputForm(
         if (workoutUiState.weatherInfo.isNotBlank()) {
             Column {
                 Text(
-                    text = stringResource(R.string.current_weather),
-                    style = MaterialTheme.typography.labelMedium,
+                    text = stringResource(R.string.workout_weather),
+                    style = MaterialTheme.typography.titleLarge,
                     modifier = Modifier.padding(bottom = 4.dp)
                 )
                 Text(
@@ -157,6 +170,11 @@ fun WorkoutInputForm(
                     style = MaterialTheme.typography.bodyLarge
                 )
             }
+        } else {
+            Text(
+                text = stringResource(R.string.weather_loading),
+                style = MaterialTheme.typography.titleMedium
+            )
         }
     }
 }
