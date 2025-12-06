@@ -2,12 +2,17 @@
     <string name="app_name">Zoomi</string>
     <string name="login_button">login</string>
     <string name="logout_button">Logout</string>
-    <string name="add_workout">Add new Workout</string>
+    <string name="add_new_workout">Add new Workout</string>
+    <string name="add_workout">Add workout</string>
     <string name="save_workout">Save Workout</string>
     <string name="workout_title_required">Workout title is required</string>
+    <string name="workout_title">Workout title</string>
+    <string name="workout_type">Workout type</string>
+    <string name="workout_duration">Workout duration</string>
+    <string name="workout_weather">Workout weather</string>
+    <string name="weather_loading">Loading weather...</string>
     <string name="workout_type_required">Workout type is required</string>
     <string name="workout_duration_hours">Hours</string>
     <string name="workout_duration_minutes">Minutes</string>
     <string name="back_button">Back</string>
-    <string name="current_weather">Current weather</string>
 </resources>
