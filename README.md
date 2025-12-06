@@ -16,20 +16,20 @@ We have made a workout tracker application. In the app you can add workouts, rev
 - :hourglass: = Work in progress
 
  
-| Status             |Description|Details|
-|--------------------|---|---|
-| :hourglass:        | **Application** || 
-| :hourglass:        | 2 UI screens | dylan, gerbe |
-| :hourglass:        | Secure API request | rene |
-| :hourglass:        | API request with IDOR | rene |
-| :heavy_check_mark: | Connection to room database |  |
-| :x:                | Secure storage | |
-|                    |  || 
-| :hourglass:        | **Security** || 
-| :x:                | Unsafe storage | gerbe |
-| :x:                | Malware | dylan |
-| :x:                | Frida functionality | gerbe |
-| :x:                | Detect root and block functionality | giel |
+| Status             |Description| Details                                                                                                                                                   |
+|--------------------|---|-----------------------------------------------------------------------------------------------------------------------------------------------------------|
+| :hourglass:        | **Application** |                                                                                                                                                           | 
+| :hourglass:        | 2 UI screens | dylan, gerbe                                                                                                                                              |
+| :heavy_check_mark: | Secure API request | We are calling the open-meteo.com api to fetch the temperature and the windspeed to display it on the workout overview screen.                            |
+| :hourglass:        | API request with IDOR | rene                                                                                                                                                      |
+| :heavy_check_mark: | Connection to room database | the workouts are added in our ZoomiDatabase, every time you create a new workout using the "Add workout" button it gets the current weather of that time. |
+| :x:                | Secure storage |                                                                                                                                                           |
+|                    |  |                                                                                                                                                           | 
+| :hourglass:        | **Security** |                                                                                                                                                           | 
+| :x:                | Unsafe storage | gerbe                                                                                                                                                     |
+| :x:                | Malware | dylan                                                                                                                                                     |
+| :x:                | Frida functionality | gerbe                                                                                                                                                     |
+| :x:                | Detect root and block functionality | giel                                                                                                                                                      |
 
 
 ## Overview app

@@ -12,7 +12,6 @@ data class WeatherData(
 @Serializable
 data class CurrentWeather(
     val temperature: Double,
-    val weathercode: Int,
     val windspeed: Double,
 
 )

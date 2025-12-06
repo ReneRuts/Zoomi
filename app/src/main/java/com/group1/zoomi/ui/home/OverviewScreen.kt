@@ -1,5 +1,8 @@
 package com.group1.zoomi.ui.home
 
+import android.Manifest
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -17,6 +20,7 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -28,6 +32,8 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.group1.zoomi.R
 import com.group1.zoomi.data.Workout
+import com.group1.zoomi.model.LocationData
+import com.group1.zoomi.model.WeatherData
 import com.group1.zoomi.ui.ZoomiViewModelProvider
 
 @Composable
@@ -39,11 +45,27 @@ fun OverviewScreen(
 ) {
 
     val overviewUiState by overviewViewModel.overviewUiState.collectAsState()
+    val location by overviewViewModel.locationState.collectAsState()
+    val weather by overviewViewModel.weatherState.collectAsState()
+
+
+    val launcher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.RequestPermission(),
+        onResult = { granted ->
+            if (granted) {
+                overviewViewModel.fetchLocation()
+            }
+        }
+    )
+
+    LaunchedEffect(Unit) {
+        launcher.launch(Manifest.permission.ACCESS_FINE_LOCATION)
+    }
 
     Column(modifier = modifier.fillMaxSize()) {
 
         // 🔹 Static header
-        HeaderUi(onLogout)
+        HeaderUi(onLogout, weather)
 
         // 🔹 Scrollable list
         LazyColumn(
@@ -99,7 +121,7 @@ fun WorkoutCard(workout: Workout, modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun HeaderUi(onLogout: () -> Unit, modifier: Modifier = Modifier) {
+fun HeaderUi(onLogout: () -> Unit, weather: WeatherData?, modifier: Modifier = Modifier) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -114,7 +136,12 @@ fun HeaderUi(onLogout: () -> Unit, modifier: Modifier = Modifier) {
             modifier = Modifier.size(72.dp)
         )
         Text(
-            text = "15°C, Sunny",
+            text = if (weather != null) {
+                "${weather.currentWeather.temperature}°C\n" +
+                        "${weather.currentWeather.windspeed} km/h"
+            } else {
+                "Loading weather..."
+            },
             style = MaterialTheme.typography.titleMedium
         )
         Button(onClick = { onLogout() }, modifier = Modifier.padding(start = 16.dp)) {
