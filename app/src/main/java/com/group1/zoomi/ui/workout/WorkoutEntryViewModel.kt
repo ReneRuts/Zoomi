@@ -4,15 +4,38 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.group1.zoomi.data.LocationRepository
 import com.group1.zoomi.data.Workout
 import com.group1.zoomi.data.WorkoutsRepository
+import com.group1.zoomi.network.WeatherApi
+import kotlinx.coroutines.launch
 
-class WorkoutEntryViewModel(private val workoutsRepository: WorkoutsRepository) : ViewModel() {
+class WorkoutEntryViewModel(
+    private val workoutsRepository: WorkoutsRepository,
+    private val locationRepository: LocationRepository
+) : ViewModel() {
     var workoutUiState by mutableStateOf(WorkoutUiState())
 
+    // get the weather as soon as the viewmodel is created
+    init {
+        fetchWeatherForWorkout()
+    }
     fun updateUiState(newWorkoutUiState: WorkoutUiState) {
         workoutUiState = newWorkoutUiState.copy()
 
+    }
+
+    private fun fetchWeatherForWorkout() {
+        viewModelScope.launch {
+            val location = locationRepository.getCurrentLocation()
+            location?.let {
+                // this is an unsecure call to the API because the user can intercept and change the data
+                val weatherData = WeatherApi.retrofitService.getWeather(it.latitude, it.longitude)
+                val weatherString = "${weatherData.currentWeather.temperature}°C\n${weatherData.currentWeather.windspeed} km/h"
+                updateUiState(workoutUiState.copy(weatherInfo = weatherString))
+            }
+        }
     }
 
     suspend fun saveWorkout() {
@@ -35,6 +58,7 @@ class WorkoutEntryViewModel(private val workoutsRepository: WorkoutsRepository) 
                     && title.isNotBlank()
                     && durationHours.isNotBlank()
                     && durationMinutes.isNotBlank()
+                    && weatherInfo.isNotBlank()
         }
 
         fun toWorkout(): Workout {
