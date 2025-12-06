@@ -136,7 +136,7 @@ fun HeaderUi(onLogout: () -> Unit, location: LocationData?, modifier: Modifier =
             text = if (location != null) {
                 "Lat: ${location.latitude}, Lon: ${location.longitude}"
             } else {
-                "Location not available"
+                "Loading..."
             },
             style = MaterialTheme.typography.titleMedium
         )
