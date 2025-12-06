@@ -33,6 +33,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.group1.zoomi.R
 import com.group1.zoomi.data.Workout
 import com.group1.zoomi.model.LocationData
+import com.group1.zoomi.model.WeatherData
 import com.group1.zoomi.ui.ZoomiViewModelProvider
 
 @Composable
@@ -45,6 +46,8 @@ fun OverviewScreen(
 
     val overviewUiState by overviewViewModel.overviewUiState.collectAsState()
     val location by overviewViewModel.locationState.collectAsState()
+    val weather by overviewViewModel.weatherState.collectAsState()
+
 
     val launcher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.RequestPermission(),
@@ -62,7 +65,7 @@ fun OverviewScreen(
     Column(modifier = modifier.fillMaxSize()) {
 
         // 🔹 Static header
-        HeaderUi(onLogout, location)
+        HeaderUi(onLogout, weather)
 
         // 🔹 Scrollable list
         LazyColumn(
@@ -118,7 +121,7 @@ fun WorkoutCard(workout: Workout, modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun HeaderUi(onLogout: () -> Unit, location: LocationData?, modifier: Modifier = Modifier) {
+fun HeaderUi(onLogout: () -> Unit, weather: WeatherData?, modifier: Modifier = Modifier) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -133,10 +136,11 @@ fun HeaderUi(onLogout: () -> Unit, location: LocationData?, modifier: Modifier =
             modifier = Modifier.size(72.dp)
         )
         Text(
-            text = if (location != null) {
-                "Lat: ${location.latitude}, Lon: ${location.longitude}"
+            text = if (weather != null) {
+                "${weather.currentWeather.temperature}°C\n" +
+                        "${weather.currentWeather.windspeed} km/h"
             } else {
-                "Loading..."
+                "Loading weather..."
             },
             style = MaterialTheme.typography.titleMedium
         )

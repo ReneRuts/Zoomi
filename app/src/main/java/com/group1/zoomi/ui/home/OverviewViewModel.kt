@@ -6,6 +6,8 @@ import com.group1.zoomi.data.LocationRepository
 import com.group1.zoomi.data.Workout
 import com.group1.zoomi.data.WorkoutsRepository
 import com.group1.zoomi.model.LocationData
+import com.group1.zoomi.model.WeatherData
+import com.group1.zoomi.network.WeatherApi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -30,9 +32,16 @@ class OverviewViewModel(
     private val _locationState = MutableStateFlow<LocationData?>(null)
     val locationState: StateFlow<LocationData?> = _locationState
 
+    private val _weatherState = MutableStateFlow<WeatherData?>(null)
+    val weatherState: StateFlow<WeatherData?> = _weatherState
+
     fun fetchLocation() {
         viewModelScope.launch {
-            _locationState.value = locationRepository.getCurrentLocation()
+            val location = locationRepository.getCurrentLocation()
+            _locationState.value = location
+            location?.let {
+                _weatherState.value = WeatherApi.retrofitService.getWeather(it.latitude, it.longitude)
+            }
         }
     }
     companion object {
