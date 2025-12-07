@@ -1,5 +1,6 @@
 package com.group1.zoomi.ui.home
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.group1.zoomi.data.LocationRepository
@@ -35,15 +36,34 @@ class OverviewViewModel(
     private val _weatherState = MutableStateFlow<WeatherData?>(null)
     val weatherState: StateFlow<WeatherData?> = _weatherState
 
+    private val _rainChanceState = MutableStateFlow<Int?>(null)
+    val rainChanceState: StateFlow<Int?> = _rainChanceState
+
     fun fetchLocation() {
         viewModelScope.launch {
             val location = locationRepository.getCurrentLocation()
             _locationState.value = location
             location?.let {
-                _weatherState.value = WeatherApi.retrofitService.getWeather(it.latitude, it.longitude)
+                val weatherData = WeatherApi.retrofitService.getWeather(it.latitude, it.longitude)
+                _weatherState.value = weatherData
+                _rainChanceState.value = getRainChanceForToday(weatherData)
             }
         }
     }
+
+    private fun getRainChanceForToday(weather: WeatherData?): Int? {
+
+        if(weather?.daily == null) return null
+        val currentDate = weather.currentWeather.time.take(10) // take is hetzelfde als substring ma me 1 parameter
+        val todayIndex = weather.daily.time.indexOf(currentDate)
+
+        return if (todayIndex != -1){
+            weather.daily.precipitationProbabilityMax[todayIndex]
+        } else {
+            null
+        }
+    }
+
     companion object {
         private const val TIMEOUT_MILLIS = 5_000L
     }
