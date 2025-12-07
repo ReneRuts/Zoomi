@@ -7,8 +7,8 @@ import androidx.navigation.compose.rememberNavController
 import com.group1.zoomi.ui.screens.LoginScreen
 import com.group1.zoomi.ui.home.OverviewScreen
 import com.group1.zoomi.ui.workout.WorkoutEntryScreen
+import com.group1.zoomi.ui.detail.DetailsScreen
 
-//import com.group1.zoomi.ui.screens.DetailsScreen
 
 
 @Composable
@@ -31,6 +31,7 @@ fun AppNavigation() {
 
         composable("overview") {
             OverviewScreen(
+                navController = navController,
                 onLogout = {
                     navController.navigate("login") {
                         popUpTo("overview") { inclusive = true}
@@ -46,6 +47,17 @@ fun AppNavigation() {
                 navigateBack = {
                     navController.navigate("overview") {
                         popUpTo("addWorkout") { inclusive = true }
+                    }
+                }
+            )
+        }
+        composable("workoutDetails/{workoutId}") { backStackEntry ->
+            val workoutId = backStackEntry.arguments?.getString("workoutId")?.toIntOrNull()
+            DetailsScreen(
+                workoutId = workoutId ?: 0,
+                onClose = {
+                    navController.navigate("overview") {
+                        popUpTo("workoutDetails/{workoutId}") { inclusive = true }
                     }
                 }
             )
