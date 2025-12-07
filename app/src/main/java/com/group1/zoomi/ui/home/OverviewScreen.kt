@@ -4,6 +4,7 @@ import android.Manifest
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -35,13 +36,17 @@ import com.group1.zoomi.data.Workout
 import com.group1.zoomi.model.LocationData
 import com.group1.zoomi.model.WeatherData
 import com.group1.zoomi.ui.ZoomiViewModelProvider
+import androidx.navigation.NavController
+
 
 @Composable
 fun OverviewScreen(
     modifier: Modifier = Modifier,
     onLogout: () -> Unit,
     onAddWorkoutClick: () -> Unit,
+    navController: NavController,
     overviewViewModel: OverviewViewModel = viewModel(factory = ZoomiViewModelProvider.Factory)
+
 ) {
 
     val overviewUiState by overviewViewModel.overviewUiState.collectAsState()
@@ -72,7 +77,11 @@ fun OverviewScreen(
             modifier = Modifier.weight(1f)
         ) {
             items(overviewUiState.workoutList) { workout ->
-                WorkoutCard(workout)
+                WorkoutCard(workout = workout,
+                    onWorkoutClick = {
+                        navController.navigate("workoutDetails/${workout.workoutId}")
+                    }
+                )
             }
         }
 
@@ -83,8 +92,16 @@ fun OverviewScreen(
 
 
 @Composable
-fun WorkoutCard(workout: Workout, modifier: Modifier = Modifier) {
-    Card(modifier = modifier.padding(8.dp)) {
+fun WorkoutCard(
+    workout: Workout,
+    modifier: Modifier = Modifier,
+    onWorkoutClick: () -> Unit
+) {
+
+    Card(modifier = modifier
+        .padding(8.dp)
+        .clickable { onWorkoutClick() }
+    ) {
         Column {
             Image(
                 painter = if (workout.imagePath != null) {
