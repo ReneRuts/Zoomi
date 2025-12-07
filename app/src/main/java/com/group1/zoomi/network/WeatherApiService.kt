@@ -17,10 +17,11 @@ private val retrofit = Retrofit.Builder()
     .build()
 
 interface WeatherApiService {
-    @GET("v1/forecast?current_weather=true")
+    @GET("v1/forecast?current_weather=true&daily=precipitation_probability_max")
     suspend fun getWeather(
         @Query("latitude") latitude: Double,
-        @Query("longitude") longitude: Double
+        @Query("longitude") longitude: Double,
+        @Query("timezone") timezone: String = "auto"
     ): WeatherData
 }
 
