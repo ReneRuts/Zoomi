@@ -68,9 +68,14 @@ fun LoginScreen(
             onClick = {
                 val rootBeer = RootBeer(context)
                 if (rootBeer.isRooted) {
-                    errorMessage = "ELA ROOT ZIJN MAG NIET EH."
+                    errorMessage = "Can't use rooted device!"
                 } else {
-                    onLoginSuccess()
+                    if(username == "user" && password == "1234"){
+                        onLoginSuccess()
+                    } else{
+                        errorMessage = "Invalid username or password"
+                    }
+
                 }
             },
             modifier = Modifier.fillMaxWidth()
