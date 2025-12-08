@@ -72,8 +72,10 @@ fun LoginScreen(
                 } else {
                     if(username == "user" && password == "1234"){
                         onLoginSuccess()
-                    } else{
-                        errorMessage = "Invalid username or password"
+                    } else if (username == "" || password == ""){
+                        errorMessage = "Please fill in all fields"
+                    } else {
+                        errorMessage = "Incorrect username or password"
                     }
 
                 }
