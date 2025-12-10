@@ -1,17 +1,10 @@
 package com.group1.zoomi.ui.detail
 
-import androidx.compose.foundation.R
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Text
+import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
 import androidx.compose.material3.Icon
 import androidx.compose.material.icons.Icons
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.IconButton
@@ -19,21 +12,14 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
-import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-
-
-
-
+import com.group1.zoomi.R
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DetailsScreen(
-    workoutId: Int,
-    modifier: Modifier = Modifier,
+fun DetailsEntryScreen(
     navigateBack: () -> Unit,
+    workoutId: Int = 0
     //viewModel: DetailsViewModel = viewmodel(factory = ZoomiViewModelProvider.Factory)
 ) {
     Scaffold(
@@ -55,7 +41,16 @@ fun DetailsScreen(
                 }
             )
         }
-    ) { }
+    ) { innerPadding ->
+        DetailsEntryBody(
+            modifier = Modifier.padding(innerPadding)
+        )
+    }
 }
 
+@Composable
+fun DetailsEntryBody(
+    modifier: Modifier = Modifier
+){
 
+}
