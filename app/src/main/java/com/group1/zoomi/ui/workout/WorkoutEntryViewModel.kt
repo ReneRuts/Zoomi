@@ -51,7 +51,10 @@ class WorkoutEntryViewModel(
         val durationHours: String = "",
         val durationMinutes: String = "",
         val weatherInfo: String = "",
-        val imagePath: String? = null
+        val imagePath: String? = null,
+        val minHeartbeat: String = "",
+        val maxHeartbeat: String = "",
+        val distance: String = ""
     ) {
         fun isValid(): Boolean {
             return type.isNotBlank()
@@ -71,7 +74,10 @@ class WorkoutEntryViewModel(
                 title = title,
                 durationHours = hours.coerceIn(0,23),
                 durationMinutes = minutes.coerceIn(0,59),
-                weatherInfo = weatherInfo
+                weatherInfo = weatherInfo,
+                minHeartbeat = minHeartbeat.toIntOrNull()?.coerceIn(0,200),
+                maxHeartbeat = maxHeartbeat.toIntOrNull()?.coerceIn(0,200),
+                distance = distance.toDoubleOrNull()?.coerceIn(0.0,100000.0)
             )
         }
     }
