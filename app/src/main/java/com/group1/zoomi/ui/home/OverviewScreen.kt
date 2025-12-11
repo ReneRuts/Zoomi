@@ -17,10 +17,12 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -53,13 +55,15 @@ fun OverviewScreen(
     val weather by overviewViewModel.weatherState.collectAsState()
     val rainChance by overviewViewModel.rainChanceState.collectAsState()
 
-
+    val locationPermissionDenied by overviewViewModel.locationPermissionDenied.collectAsState()
 
     val launcher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.RequestPermission(),
         onResult = { granted ->
             if (granted) {
                 overviewViewModel.fetchLocation()
+            } else {
+                overviewViewModel.setLocationPermissionDenied(true)
             }
         }
     )
@@ -88,6 +92,33 @@ fun OverviewScreen(
 
         // 🔹 Static footer
         FooterUi(onAddWorkoutClick = onAddWorkoutClick)
+    }
+    if (locationPermissionDenied) {
+        AlertDialog(
+            onDismissRequest = { },
+            title = { Text(stringResource(R.string.location_permission_required)) },
+            text = { Text(stringResource(R.string.location_permission_required_description)) },
+            confirmButton = {
+                TextButton(
+                    onClick = {
+                        overviewViewModel.setLocationPermissionDenied(false)
+                        launcher.launch(Manifest.permission.ACCESS_FINE_LOCATION)
+                    }
+                ) {
+                    Text(stringResource(R.string.retry))
+                }
+            },
+            dismissButton = {
+                TextButton(
+                    onClick = {
+                        overviewViewModel.setLocationPermissionDenied(false)
+                        onLogout()
+                    }
+                ) {
+                    Text(stringResource(R.string.exit_app))
+                }
+            }
+        )
     }
 }
 
