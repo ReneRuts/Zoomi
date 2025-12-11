@@ -29,7 +29,7 @@ We have made a workout tracker application. In the app you can add workouts, rev
 | :x:                | Unsafe storage | gerbe                                                                                                                                                     |
 | :x:                | Malware | dylan                                                                                                                                                     |
 | :x:                | Frida functionality | gerbe                                                                                                                                                     |
-| :x:                | Detect root and block functionality | giel                                                                                                                                                      |
+| :heavy_check_mark:                | Detect root and block functionality | giel                                                                                                                                                      |
 
 
 ## Overview app
