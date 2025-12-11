@@ -32,7 +32,7 @@ class WorkoutEntryViewModel(
             location?.let {
                 // this is an unsecure call to the API because the user can intercept and change the data
                 val weatherData = WeatherApi.retrofitService.getWeather(it.latitude, it.longitude)
-                val weatherString = "${weatherData.currentWeather.temperature}°C  ${weatherData.currentWeather.windspeed} km/h"
+                val weatherString = "${weatherData.currentWeather.temperature}°C, ${weatherData.currentWeather.windspeed} km/h"
                 updateUiState(workoutUiState.copy(weatherInfo = weatherString))
             }
         }
@@ -51,7 +51,10 @@ class WorkoutEntryViewModel(
         val durationHours: String = "",
         val durationMinutes: String = "",
         val weatherInfo: String = "",
-        val imagePath: String? = null
+        val imagePath: String? = null,
+        val minHeartbeat: String = "",
+        val maxHeartbeat: String = "",
+        val distance: String = ""
     ) {
         fun isValid(): Boolean {
             return type.isNotBlank()
@@ -72,7 +75,9 @@ class WorkoutEntryViewModel(
                 durationHours = hours.coerceIn(0,23),
                 durationMinutes = minutes.coerceIn(0,59),
                 weatherInfo = weatherInfo,
-                imagePath = imagePath
+                minHeartbeat = minHeartbeat.toIntOrNull()?.coerceIn(0,200),
+                maxHeartbeat = maxHeartbeat.toIntOrNull()?.coerceIn(0,200),
+                distance = distance.toDoubleOrNull()?.coerceIn(0.0,100000.0)
             )
         }
     }

@@ -24,20 +24,24 @@ class ZoomiApplication : Application() {
                 Workout(
                     type = "Running",
                     title = "Morning Park Run",
-                    durationHours = 12,
+                    durationHours = 1,
                     durationMinutes = 30,
                     weatherInfo = "15°C, Sunny",
-                    imagePath = "test"
+                    minHeartbeat = 134,
+                    maxHeartbeat = 210,
+                    distance = 10.5
                 )
             )
             workoutDao.insert(
                 Workout(
-                    type = "Weightlifting",
+                    type = "Weight Training",
                     title = "Full Body Strength",
                     durationHours = 0,
                     durationMinutes = 15,
                     weatherInfo = "Indoors",
-                    imagePath = null
+                    minHeartbeat = 100,
+                    maxHeartbeat = 140,
+                    distance = null
                 )
             )
             workoutDao.insert(
@@ -47,7 +51,9 @@ class ZoomiApplication : Application() {
                     durationHours = 0,
                     durationMinutes = 45,
                     weatherInfo = "Indoors",
-                    imagePath = null
+                    minHeartbeat = null,
+                    maxHeartbeat = null,
+                    distance = null
                 )
             )
         }

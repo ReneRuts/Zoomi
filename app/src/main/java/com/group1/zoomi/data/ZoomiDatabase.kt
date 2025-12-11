@@ -7,7 +7,10 @@ import androidx.room.RoomDatabase
 
 @Database(
     entities = [Workout::class],
-    version = 2, //number 2 because of the change from duration to durationHours & durationMinutes
+    version = 4,
+    //number 2 because of the change from duration to durationHours & durationMinutes
+    //number 3 from removing the imagePath field
+    //number 4 from adding the minHeartbeat, maxHeartbeat and distance fields
     exportSchema = false
 )
 abstract class ZoomiDatabase : RoomDatabase() {

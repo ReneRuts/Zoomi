@@ -39,6 +39,13 @@ class OverviewViewModel(
     private val _rainChanceState = MutableStateFlow<Int?>(null)
     val rainChanceState: StateFlow<Int?> = _rainChanceState
 
+    private val _locationPermissionDenied = MutableStateFlow(false)
+    val locationPermissionDenied: StateFlow<Boolean> = _locationPermissionDenied
+
+    fun setLocationPermissionDenied(value: Boolean) {
+        _locationPermissionDenied.value = value
+    }
+
     fun fetchLocation() {
         viewModelScope.launch {
             val location = locationRepository.getCurrentLocation()

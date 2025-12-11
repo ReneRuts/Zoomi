@@ -2,6 +2,8 @@
     <string name="app_name">Zoomi</string>
     <string name="login_button">login</string>
     <string name="logout_button">Logout</string>
+    <string name="location_permission_required">Location Required</string>
+    <string name="location_permission_required_description">Zoomi requires precise location access to function properly. Please grant the permission through your settings.</string>
     <string name="add_new_workout">Add new Workout</string>
     <string name="add_workout">Add workout</string>
     <string name="save_workout">Save Workout</string>
@@ -12,7 +14,14 @@
     <string name="workout_weather">Workout weather</string>
     <string name="weather_loading">Loading weather...</string>
     <string name="workout_type_required">Workout type is required</string>
-    <string name="workout_duration_hours">Hours</string>
-    <string name="workout_duration_minutes">Minutes</string>
+    <string name="workout_duration_hours">Hours (0-23)</string>
+    <string name="workout_duration_minutes">Minutes (0-59)</string>
+    <string name="workout_min_heartbeat">Minimum Heartbeat (0-250)</string>
+    <string name="workout_max_heartbeat">Maximum Heartbeat (0-250)</string>
+    <string name="workout_distance">Distance (km)</string>
     <string name="back_button">Back</string>
+    <string name="details_header">Details of your workout</string>
+    <string name="collapse">Collapse</string>
+    <string name="expand">Expand</string>
+    <string name="retry">Retry</string>
 </resources>

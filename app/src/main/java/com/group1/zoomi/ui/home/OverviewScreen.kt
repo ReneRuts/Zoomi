@@ -1,8 +1,10 @@
 package com.group1.zoomi.ui.home
 
 import android.Manifest
+import android.app.Activity
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -16,10 +18,12 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -27,13 +31,13 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.group1.zoomi.R
 import com.group1.zoomi.data.Workout
-import com.group1.zoomi.model.LocationData
 import com.group1.zoomi.model.WeatherData
 import com.group1.zoomi.ui.ZoomiViewModelProvider
 import androidx.navigation.NavController
@@ -53,13 +57,15 @@ fun OverviewScreen(
     val weather by overviewViewModel.weatherState.collectAsState()
     val rainChance by overviewViewModel.rainChanceState.collectAsState()
 
-
+    val locationPermissionDenied by overviewViewModel.locationPermissionDenied.collectAsState()
 
     val launcher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.RequestPermission(),
         onResult = { granted ->
             if (granted) {
                 overviewViewModel.fetchLocation()
+            } else {
+                overviewViewModel.setLocationPermissionDenied(true)
             }
         }
     )
@@ -89,6 +95,23 @@ fun OverviewScreen(
         // 🔹 Static footer
         FooterUi(onAddWorkoutClick = onAddWorkoutClick)
     }
+    if (locationPermissionDenied) {
+        AlertDialog(
+            onDismissRequest = { },
+            title = { Text(stringResource(R.string.location_permission_required)) },
+            text = { Text(stringResource(R.string.location_permission_required_description)) },
+            confirmButton = {
+                TextButton(
+                    onClick = {
+                        overviewViewModel.setLocationPermissionDenied(false)
+                        launcher.launch(Manifest.permission.ACCESS_FINE_LOCATION)
+                    }
+                ) {
+                    Text(stringResource(R.string.retry))
+                }
+            }
+        )
+    }
 }
 
 
@@ -105,11 +128,7 @@ fun WorkoutCard(
     ) {
         Column {
             Image(
-                painter = if (workout.imagePath != null) {
-                    painterResource(R.drawable.weight_training)
-                } else {
-                    painterResource(R.drawable.default_workout)
-                },
+                painter = painterResource(id = getWorkoutImage(workout = workout)),
                 contentDescription = workout.title,
                 modifier = Modifier
                     .fillMaxWidth()
@@ -180,5 +199,21 @@ fun FooterUi(modifier: Modifier = Modifier, onAddWorkoutClick: () -> Unit) {
             .padding(16.dp)
     ) {
         Text(stringResource(R.string.add_workout))
+    }
+}
+
+@DrawableRes
+private fun getWorkoutImage(workout: Workout): Int {
+    return when (workout.type) {
+        "Cycling" -> R.drawable.cycling
+        "Hiking" -> R.drawable.hiking
+        "Running" -> R.drawable.running
+        "Sailing" -> R.drawable.sailing
+        "Skiing" -> R.drawable.skiing
+        "Swimming" -> R.drawable.swimming
+        "Walking" -> R.drawable.walking
+        "Weight Training" -> R.drawable.weight_training
+        "Yoga" -> R.drawable.yoga
+        else -> R.drawable.default_workout
     }
 }
