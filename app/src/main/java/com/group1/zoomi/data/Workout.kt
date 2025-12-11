@@ -11,6 +11,5 @@ data class Workout(
     val title: String,
     val durationHours: Int,
     val durationMinutes: Int,
-    val weatherInfo: String,
-    val imagePath: String? = null
+    val weatherInfo: String
 )
