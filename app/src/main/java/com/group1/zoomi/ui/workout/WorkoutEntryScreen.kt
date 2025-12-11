@@ -9,7 +9,10 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.Button
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ExposedDropdownMenuBox
+import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -19,7 +22,11 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
@@ -99,6 +106,7 @@ fun WorkoutEntryBody(
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun WorkoutInputForm(
     workoutUiState: WorkoutUiState,
@@ -106,6 +114,10 @@ fun WorkoutInputForm(
     onValueChange: (WorkoutUiState) -> Unit = {},
     enabled: Boolean = true
 ) {
+    val workoutTypes = listOf("Cycling", "Hiking", "Running", "Sailing", "Skiing", "Swimming", "Walking", "Weight Training", "Yoga")
+    var expanded by remember { mutableStateOf(false) }
+
+
     Column(
         modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(16.dp)
@@ -126,14 +138,37 @@ fun WorkoutInputForm(
             text = stringResource(R.string.workout_type),
             style = MaterialTheme.typography.titleLarge
         )
-        OutlinedTextField(
-            value = workoutUiState.type,
-            onValueChange = { onValueChange(workoutUiState.copy(type = it)) },
-            label = { Text(stringResource(R.string.workout_type_required)) },
-            modifier = Modifier.fillMaxWidth(),
-            enabled = enabled,
-            singleLine = true
-        )
+        ExposedDropdownMenuBox(
+            expanded = expanded,
+            onExpandedChange = { expanded = !expanded }
+        ) {
+            OutlinedTextField(
+                value = workoutUiState.type,
+                onValueChange = { },
+                label = { Text(stringResource(R.string.workout_type_required)) },
+                readOnly = true,
+                trailingIcon = {
+                    ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded)
+                },
+                modifier = Modifier.fillMaxWidth().menuAnchor(),
+                enabled = enabled,
+                singleLine = true
+            )
+            ExposedDropdownMenu(
+                expanded = expanded,
+                onDismissRequest = { expanded = false }
+            ) {
+                workoutTypes.forEach { type ->
+                    DropdownMenuItem(
+                        text = { Text(type) },
+                        onClick = {
+                            onValueChange(workoutUiState.copy(type = type))
+                            expanded = false
+                        }
+                    )
+                }
+            }
+        }
         Text(
             text = stringResource(R.string.workout_duration),
             style = MaterialTheme.typography.titleLarge
