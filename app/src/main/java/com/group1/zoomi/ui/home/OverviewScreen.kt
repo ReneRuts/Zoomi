@@ -3,6 +3,7 @@ package com.group1.zoomi.ui.home
 import android.Manifest
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -33,7 +34,6 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.group1.zoomi.R
 import com.group1.zoomi.data.Workout
-import com.group1.zoomi.model.LocationData
 import com.group1.zoomi.model.WeatherData
 import com.group1.zoomi.ui.ZoomiViewModelProvider
 import androidx.navigation.NavController
@@ -105,11 +105,7 @@ fun WorkoutCard(
     ) {
         Column {
             Image(
-                painter = if (workout.imagePath != null) {
-                    painterResource(R.drawable.weight_training)
-                } else {
-                    painterResource(R.drawable.default_workout)
-                },
+                painter = painterResource(id = getWorkoutImage(workout = workout)),
                 contentDescription = workout.title,
                 modifier = Modifier
                     .fillMaxWidth()
@@ -180,5 +176,21 @@ fun FooterUi(modifier: Modifier = Modifier, onAddWorkoutClick: () -> Unit) {
             .padding(16.dp)
     ) {
         Text(stringResource(R.string.add_workout))
+    }
+}
+
+@DrawableRes
+private fun getWorkoutImage(workout: Workout): Int {
+    return when (workout.type) {
+        "Cycling" -> R.drawable.cycling
+        "Hiking" -> R.drawable.hiking
+        "Running" -> R.drawable.running
+        "Sailing" -> R.drawable.sailing
+        "Skiing" -> R.drawable.skiing
+        "Swimming" -> R.drawable.swimming
+        "Walking" -> R.drawable.walking
+        "Weight Training" -> R.drawable.weight_training
+        "Yoga" -> R.drawable.yoga
+        else -> R.drawable.default_workout
     }
 }
