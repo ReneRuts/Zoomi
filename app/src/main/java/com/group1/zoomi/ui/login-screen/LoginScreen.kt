@@ -1,4 +1,4 @@
-package com.group1.zoomi.ui.screens
+package com.group1.zoomi.ui.`login-screen`
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
