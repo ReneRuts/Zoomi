@@ -1,6 +1,7 @@
 package com.group1.zoomi.ui.home
 
 import android.Manifest
+import android.app.Activity
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.DrawableRes
@@ -30,6 +31,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -54,6 +56,7 @@ fun OverviewScreen(
     val overviewUiState by overviewViewModel.overviewUiState.collectAsState()
     val weather by overviewViewModel.weatherState.collectAsState()
     val rainChance by overviewViewModel.rainChanceState.collectAsState()
+    val activity = (LocalContext.current as? Activity)
 
     val locationPermissionDenied by overviewViewModel.locationPermissionDenied.collectAsState()
 
@@ -112,7 +115,7 @@ fun OverviewScreen(
                 TextButton(
                     onClick = {
                         overviewViewModel.setLocationPermissionDenied(false)
-                        onLogout()
+                        activity?.finish()
                     }
                 ) {
                     Text(stringResource(R.string.exit_app))
