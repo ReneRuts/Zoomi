@@ -11,5 +11,8 @@ data class Workout(
     val title: String,
     val durationHours: Int,
     val durationMinutes: Int,
-    val weatherInfo: String
+    val weatherInfo: String,
+    val minHeartbeat: Int?,
+    val maxHeartbeat: Int?,
+    val distance: Double?
 )
