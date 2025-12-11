@@ -12,8 +12,14 @@
     <string name="workout_weather">Workout weather</string>
     <string name="weather_loading">Loading weather...</string>
     <string name="workout_type_required">Workout type is required</string>
-    <string name="workout_duration_hours">Hours</string>
-    <string name="workout_duration_minutes">Minutes</string>
+    <string name="workout_duration_hours">Hours (0-23)</string>
+    <string name="workout_duration_minutes">Minutes (0-59)</string>
+    <string name="workout_min_heartbeat">Minimum Heartbeat (0-250)</string>
+    <string name="workout_max_heartbeat">Maximum Heartbeat (0-250)</string>
+    <string name="workout_distance">Distance (km)</string>
     <string name="back_button">Back</string>
     <string name="details_header">Details of your workout</string>
+    <string name="collapse">Collapse</string>
+    <string name="expand">Expand</string>
+"
 </resources>
