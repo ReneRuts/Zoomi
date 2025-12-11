@@ -25,8 +25,8 @@ We have made a workout tracker application. In the app you can add workouts, rev
 | :heavy_check_mark: | Connection to room database | the workouts are added in our ZoomiDatabase, every time you create a new workout using the "Add workout" button it gets the current weather of that time. |
 | :x:                | Secure storage |                                                                                                                                                           |
 |                    |  |                                                                                                                                                           | 
-| :hourglass:        | **Security** |                                                                                                                                                           | 
-| :x:                | Unsafe storage | gerbe                                                                                                                                                     |
+|        | **Security** |                                                                                                                                                           | 
+| :hourglass:                | Unsafe storage | gerbe                                                                                                                                                     |
 | :x:                | Malware | dylan                                                                                                                                                     |
 | :x:                | Frida functionality | gerbe                                                                                                                                                     |
 | :heavy_check_mark:                | Detect root and block functionality | giel                                                                                                                                                      |
