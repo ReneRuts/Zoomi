@@ -3,7 +3,7 @@
     <string name="login_button">login</string>
     <string name="logout_button">Logout</string>
     <string name="location_permission_required">Location Required</string>
-    <string name="location_permission_required_description">Zoomi requires precise location access to function properly. Please grant the permission.</string>
+    <string name="location_permission_required_description">Zoomi requires precise location access to function properly. Please grant the permission through your settings.</string>
     <string name="add_new_workout">Add new Workout</string>
     <string name="add_workout">Add workout</string>
     <string name="save_workout">Save Workout</string>
@@ -24,5 +24,4 @@
     <string name="collapse">Collapse</string>
     <string name="expand">Expand</string>
     <string name="retry">Retry</string>
-    <string name="exit_app">Exit app</string>
 </resources>

@@ -56,7 +56,6 @@ fun OverviewScreen(
     val overviewUiState by overviewViewModel.overviewUiState.collectAsState()
     val weather by overviewViewModel.weatherState.collectAsState()
     val rainChance by overviewViewModel.rainChanceState.collectAsState()
-    val activity = (LocalContext.current as? Activity)
 
     val locationPermissionDenied by overviewViewModel.locationPermissionDenied.collectAsState()
 
@@ -109,16 +108,6 @@ fun OverviewScreen(
                     }
                 ) {
                     Text(stringResource(R.string.retry))
-                }
-            },
-            dismissButton = {
-                TextButton(
-                    onClick = {
-                        overviewViewModel.setLocationPermissionDenied(false)
-                        activity?.finish()
-                    }
-                ) {
-                    Text(stringResource(R.string.exit_app))
                 }
             }
         )
