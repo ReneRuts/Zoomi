@@ -23,7 +23,7 @@ We have made a workout tracker application. In the app you can add workouts, rev
 | :heavy_check_mark: | Secure API request | We are calling the open-meteo.com api to fetch the temperature and the windspeed to display it on the workout overview screen.                            |
 | :hourglass:        | API request with IDOR | rene                                                                                                                                                      |
 | :heavy_check_mark: | Connection to room database | the workouts are added in our ZoomiDatabase, every time you create a new workout using the "Add workout" button it gets the current weather of that time. |
-| :x:                | Secure storage |                                                                                                                                                           |
+| :x:                | Secure storage |  Giel                                                                                                                                                         |
 |                    |  |                                                                                                                                                           | 
 |        | **Security** |                                                                                                                                                           | 
 | :hourglass:                | Unsafe storage | gerbe                                                                                                                                                     |
