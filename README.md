@@ -57,8 +57,67 @@ Type of data stored used in screen x and displayed in screen y.
 Implementation of malware.
 
 ### ![](ReadmeImages/Frida.png) Frida
-Detail implementation of Frida
+We're going to bypass the isRoot() function to bypass the Root detection
 
+**1. Beforehand**
+
+a. We have to have a rooted device.
+  > Root the created AVD and check with the app `rootchecker` (apk available on Leho) if root was successful.
+  > 
+  > - `git clone https://gitlab.com/newbit/rootAVD`
+  > - `cd rootAVD`
+  > - `rootAVD.bat ListAllAVDs`
+  > - run the one which ends with `ramdisk.img`
+  >   - `rootAVD.bat system-images\android-36\google_apis\x86_64\ramdisk.img`
+  > - reopen emulator, run rootcheck, select "Forever", it's done.
+  > 
+  > - `adb install <path_to_app_apk>` => to install apps 
+
+b. We have to install frida server on both the emulator & our host.
+  > Download frida-server from this site:
+  > 
+  > https://github.com/frida/frida/releases
+  > 
+  > For this case install version `17.5.1` zip file
+  >
+  > Push the unzipped file to /sdcard/frida and rename it to frida-server
+  >
+  > then copy it to /data/local/tmp
+  > 
+  > from the host run `adb shell '/data/local/tmp/frida-server &'`
+  > 
+  >  to run it on te background on the device.
+
+  **2. We have to look for interesting functions on the apk.**
+
+  > I've done this for you and I found the isRoot() function inside of the loginScreen.kt file.
+  > 
+  > Let's first watch what the function does using the following command
+  >
+  > run `frida-trace -U -j '*!isRoot' -N com.group1.zoomi` from your host
+  >
+  > It should show the line 'Started tracing x functions.'
+  > 
+  > When trying to log in it shows that the isRoot function returns 'true' which causes us to not being able to login.
+
+**3. We have to write a script that bypasses the isRoot() function.**
+  > I've done this for you:
+```javascript
+Java.perform(function () {
+  var LoginScreenKt = Java.use("com.group1.zoomi.ui.login.LoginScreenKt");
+
+  LoginScreenKt.isRoot.implementation = function (context) {
+    console.log("[*] isRoot() got called!");
+    return false;
+  };
+});
+```
+  > Save this code to a file called `isRoot.js`
+
+**4. Let's bypass the root detection of our app.**
+  > run `frida -U -f com.group1.zoomi -l <path_to_isRoot.js_file>`
+  >
+  > try to login using the credentials and you'll notice the root check is bypassed using frida.
 ### ![](ReadmeImages/Root.png) Root
 Implementation of the detecting root and block functionality.
 
@@ -67,6 +126,6 @@ https://
 
 ## Repositories
 - Code
-  - https://gitlab.ti.howest.be/ti/2025-2026/s3/mobilesecurity/students/group-01/zoomi/-/tree/cfea683722fcef257f5ed87706f8312ac0ab370c/
+  - https://gitlab.ti.howest.be/ti/2025-2026/s3/mobilesecurity/students/group-01/zoomi/
 - APK
   - [Link to repository]
