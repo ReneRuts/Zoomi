@@ -1,5 +1,14 @@
 package com.group1.zoomi.ui.detail
 
+import androidx.annotation.DrawableRes
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.material3.Text
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
@@ -12,16 +21,28 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.group1.zoomi.R
+import com.group1.zoomi.data.Workout
+import com.group1.zoomi.ui.ZoomiViewModelProvider
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DetailsEntryScreen(
     navigateBack: () -> Unit,
-    workoutId: Int = 0
-    //viewModel: DetailsViewModel = viewmodel(factory = ZoomiViewModelProvider.Factory)
+    workoutId: Int = 0,
+    viewModel: DetailsViewModel = viewModel(factory = ZoomiViewModelProvider .Factory)
 ) {
+    val workoutDetails by viewModel.getWorkoutDetails(workoutId).collectAsState()
+
     Scaffold(
         topBar = {
             TopAppBar(
@@ -43,6 +64,7 @@ fun DetailsEntryScreen(
         }
     ) { innerPadding ->
         DetailsEntryBody(
+            workout = workoutDetails,
             modifier = Modifier.padding(innerPadding)
         )
     }
@@ -50,7 +72,97 @@ fun DetailsEntryScreen(
 
 @Composable
 fun DetailsEntryBody(
+    modifier: Modifier = Modifier,
+    workout: Workout?,
+) {
+    if (workout == null) {
+        Column(
+            modifier = modifier
+                .fillMaxSize()
+                .padding(24.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        ) {
+            Text(
+                text = "Loading workout...",
+            )
+        }
+        return
+    }
+
+    Column(
+        modifier = modifier
+            .fillMaxSize()
+            .padding(16.dp),
+        horizontalAlignment = Alignment.Start,
+        verticalArrangement = Arrangement.Top
+    ) {
+        Image(
+            painter = painterResource(id = getWorkoutImage(workout)),
+            contentDescription = workout.title,
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(250.dp),
+            contentScale = ContentScale.Crop
+        )
+        Spacer(modifier = Modifier.height(24.dp))
+
+        Text(
+            text = workout.title,
+        )
+        Spacer(modifier = Modifier.height(16.dp))
+
+        DetailRow(label = "Type", value = workout.type)
+        Spacer(modifier = Modifier.height(12.dp))
+
+        DetailRow(
+            label = "Duration",
+            value = "${workout.durationHours}h ${workout.durationMinutes}m"
+        )
+        Spacer(modifier = Modifier.height(12.dp))
+
+        DetailRow(label = "Weather", value = workout.weatherInfo)
+        Spacer(modifier = Modifier.weight(1f))
+    }
+}
+
+@Composable
+private fun DetailRow(
+    label: String,
+    value: String,
     modifier: Modifier = Modifier
-){
+) {
+    Row(
+        modifier = modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Text(
+            text = label,
+
+        )
+        Text(
+            text = value,
+        )
+    }
+}
+
+@DrawableRes
+private fun getWorkoutImage(workout: Workout): Int {
+    return when (workout.type) {
+        "Cycling" -> R.drawable.cycling
+        "Hiking" -> R.drawable.hiking
+        "Running" -> R.drawable.running
+        "Sailing" -> R.drawable.sailing
+        "Skiing" -> R.drawable.skiing
+        "Swimming" -> R.drawable.swimming
+        "Walking" -> R.drawable.walking
+        "Weight Training" -> R.drawable.weight_training
+        "Yoga" -> R.drawable.yoga
+        else -> R.drawable.default_workout
+    }
 
 }
+
+
+
