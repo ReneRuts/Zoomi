@@ -124,7 +124,7 @@ fun WorkoutInputForm(
     onValueChange: (WorkoutUiState) -> Unit = {},
     enabled: Boolean = true
 ) {
-    val workoutTypes = listOf("Running", "Weight Training", "Cardio", "Yoga", "Pilates", "Swimming")
+    val workoutTypes = listOf("Cycling", "Hiking", "Running", "Sailing", "Skiing", "Swimming", "Walking", "Weight Training", "Yoga")
     var expanded by remember { mutableStateOf(false) }
     var optionalExpanded by remember { mutableStateOf(false) }
 
