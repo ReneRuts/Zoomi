@@ -2,6 +2,8 @@ package com.group1.zoomi.ui.detail
 
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -9,22 +11,24 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.material3.Text
 import androidx.compose.foundation.layout.padding
-import androidx.compose.runtime.Composable
-import androidx.compose.material3.Icon
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -38,7 +42,7 @@ import com.group1.zoomi.ui.ZoomiViewModelProvider
 @Composable
 fun DetailsEntryScreen(
     navigateBack: () -> Unit,
-    workoutId: Int = 0,
+    workoutId: Int,
     viewModel: DetailsViewModel = viewModel(factory = ZoomiViewModelProvider .Factory)
 ) {
     val workoutDetails by viewModel.getWorkoutDetails(workoutId).collectAsState()
@@ -79,9 +83,12 @@ fun DetailsEntryBody(
         Column(
             modifier = modifier
                 .fillMaxSize()
+                .background(MaterialTheme.colorScheme.primaryContainer)
                 .padding(24.dp),
+
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
+
         ) {
             Text(
                 text = "Loading workout...",
@@ -94,35 +101,57 @@ fun DetailsEntryBody(
         modifier = modifier
             .fillMaxSize()
             .padding(16.dp),
-        horizontalAlignment = Alignment.Start,
+        horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Top
     ) {
-        Image(
-            painter = painterResource(id = getWorkoutImage(workout)),
-            contentDescription = workout.title,
+        Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(250.dp),
-            contentScale = ContentScale.Crop
-        )
-        Spacer(modifier = Modifier.height(24.dp))
+                .background(color = MaterialTheme.colorScheme.primaryContainer, shape = RoundedCornerShape(8.dp))
+                .clip(RoundedCornerShape(8.dp))
+        ) {
+            Image(
+                painter = painterResource(id = getWorkoutImage(workout)),
+                contentDescription = workout.title,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(250.dp)
+                    .padding(bottom = 8.dp),
+                contentScale = ContentScale.Crop
+            )
 
-        Text(
-            text = workout.title,
-        )
-        Spacer(modifier = Modifier.height(16.dp))
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp)
+            ) {
+                Text(
+                    text = workout.title,
+                    style = MaterialTheme.typography.headlineLarge
+                )
+                Spacer(modifier = Modifier.height(16.dp))
 
-        DetailRow(label = "Type", value = workout.type)
-        Spacer(modifier = Modifier.height(12.dp))
+                DetailRow(label = "Type", value = workout.type)
+                Spacer(modifier = Modifier.height(12.dp))
 
-        DetailRow(
-            label = "Duration",
-            value = "${workout.durationHours}h ${workout.durationMinutes}m"
-        )
-        Spacer(modifier = Modifier.height(12.dp))
+                DetailRow(
+                    label = "Duration",
+                    value = "${workout.durationHours}h ${workout.durationMinutes}m"
+                )
+                Spacer(modifier = Modifier.height(12.dp))
 
-        DetailRow(label = "Weather", value = workout.weatherInfo)
-        Spacer(modifier = Modifier.weight(1f))
+                DetailRow(label = "Weather", value = workout.weatherInfo)
+                Spacer(modifier = Modifier.height(12.dp))
+
+                DetailRow(label = "Min Heartbeat", value = workout.minHeartbeat?.toString() ?: "N/A")
+                Spacer(modifier = Modifier.height(12.dp))
+
+                DetailRow(label = "Max Heartbeat", value = workout.maxHeartbeat?.toString() ?: "N/A")
+                Spacer(modifier = Modifier.height(12.dp))
+
+                DetailRow(label = "Distance", value = workout.distance?.toString() ?: "N/A")
+            }
+        }
     }
 }
 
@@ -138,11 +167,10 @@ private fun DetailRow(
         verticalAlignment = Alignment.CenterVertically
     ) {
         Text(
-            text = label,
-
+            text = label
         )
         Text(
-            text = value,
+            text = value
         )
     }
 }
@@ -163,6 +191,3 @@ private fun getWorkoutImage(workout: Workout): Int {
     }
 
 }
-
-
-
