@@ -4,8 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.group1.zoomi.ui.detail.DetailsEntryBody
-import com.group1.zoomi.ui.screens.LoginScreen
+import com.group1.zoomi.ui.login.LoginScreen
 import com.group1.zoomi.ui.home.OverviewScreen
 import com.group1.zoomi.ui.workout.WorkoutEntryScreen
 import com.group1.zoomi.ui.detail.DetailsEntryScreen

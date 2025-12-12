@@ -1,4 +1,4 @@
-package com.group1.zoomi.ui.screens
+package com.group1.zoomi.ui.login
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
@@ -12,6 +12,15 @@ import androidx.compose.ui.unit.dp
 import com.group1.zoomi.ui.theme.ZoomiTheme
 import com.scottyab.rootbeer.RootBeer
 
+
+
+
+fun validateCredentials(userInput: String, passwdInput: String) : Boolean{
+    val passwd = "1234"
+    val username = "user"
+    return passwd == passwdInput && username == userInput
+
+}
 
 @Composable
 fun LoginScreen(
@@ -68,9 +77,14 @@ fun LoginScreen(
             onClick = {
                 val rootBeer = RootBeer(context)
                 if (rootBeer.isRooted) {
-                    errorMessage = "ELA ROOT ZIJN MAG NIET EH."
+                    errorMessage = "Can't use rooted device!"
                 } else {
-                    onLoginSuccess()
+                    if (validateCredentials(username, password)) {
+                        onLoginSuccess()
+                    } else {
+                        errorMessage = "Invalid credentials"
+                    }
+
                 }
             },
             modifier = Modifier.fillMaxWidth()
