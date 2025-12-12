@@ -118,6 +118,10 @@ Java.perform(function () {
   > run `frida -U -f com.group1.zoomi -l <path_to_isRoot.js_file>`
   >
   > try to login using the credentials and you'll notice the root check is bypassed using frida.
+
+Small demo video:
+[Click here to view](ReadmeImages/root-check-bypass-demo.mp4)
+
 ### ![](ReadmeImages/Root.png) Root
 Implementation of the detecting root and block functionality.
 
