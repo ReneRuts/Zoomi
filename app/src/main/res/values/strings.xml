@@ -24,4 +24,7 @@
     <string name="collapse">Collapse</string>
     <string name="expand">Expand</string>
     <string name="retry">Retry</string>
+    <string name="workout_saved_successfully">Workout saved successfully</string>
+    <string name="error_saving_file">Error saving file"</string>
+    <string name="error_creating_file">Error creating file</string>
 </resources>
