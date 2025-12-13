@@ -27,4 +27,5 @@
     <string name="workout_saved_successfully">Workout saved successfully</string>
     <string name="error_saving_file">Error saving file"</string>
     <string name="error_creating_file">Error creating file</string>
+    <string name="download_workout">Download Workout</string>
 </resources>
