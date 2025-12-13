@@ -88,6 +88,14 @@ b. We have to install frida server on both the emulator & our host.
   > 
   >  to run it on te background on the device.
 
+c. We now have to install frida to our host.
+  > In your cmd create a venv environment to install the right python modules
+
+  > then activate the venv environment and run the folowing commands: `pip3 install frida-tools`
+  
+  > when that is installed you can test if it works with the command: `frida-ps -U` 
+  if this gives output frida is installed on your host and you can move on to the next step
+
   **2. We have to look for interesting functions on the apk.**
 
   > I've done this for you and I found the isRoot() function inside of the loginScreen.kt file.
