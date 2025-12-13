@@ -22,6 +22,15 @@ class DetailsViewModel(
                 initialValue = null
             )
 
+    fun formatWorkoutDetails(workout: Workout): String {
+        return """
+            Title: ${workout.title}
+            Type: ${workout.type}
+            Duration: ${workout.durationHours} hours and ${workout.durationMinutes} minutes
+            Weather: ${workout.weatherInfo}
+        """.trimIndent()
+    }
+
     companion object {
         private const val TIMEOUT_MILLIS = 5_000L
     }
