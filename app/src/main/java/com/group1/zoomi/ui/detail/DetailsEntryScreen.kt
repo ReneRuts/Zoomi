@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.material3.Text
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
+import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
@@ -26,6 +27,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -42,6 +44,7 @@ fun DetailsEntryScreen(
     viewModel: DetailsViewModel = viewModel(factory = ZoomiViewModelProvider .Factory)
 ) {
     val workoutDetails by viewModel.getWorkoutDetails(workoutId).collectAsState()
+    val context = LocalContext.current
 
     Scaffold(
         topBar = {
@@ -65,7 +68,12 @@ fun DetailsEntryScreen(
     ) { innerPadding ->
         DetailsEntryBody(
             workout = workoutDetails,
-            modifier = Modifier.padding(innerPadding)
+            modifier = Modifier.padding(innerPadding),
+            onDownloadClick = {
+                workoutDetails?.let {
+                    viewModel.saveWorkoutDetails(context, it)
+                }
+            }
         )
     }
 }
@@ -74,6 +82,7 @@ fun DetailsEntryScreen(
 fun DetailsEntryBody(
     modifier: Modifier = Modifier,
     workout: Workout?,
+    onDownloadClick: () -> Unit = {}
 ) {
     if (workout == null) {
         Column(
@@ -123,6 +132,13 @@ fun DetailsEntryBody(
 
         DetailRow(label = "Weather", value = workout.weatherInfo)
         Spacer(modifier = Modifier.weight(1f))
+
+        Button(
+            onClick = onDownloadClick,
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text(stringResource(R.string.download_workout))
+        }
     }
 }
 
