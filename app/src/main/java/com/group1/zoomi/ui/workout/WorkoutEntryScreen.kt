@@ -15,6 +15,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.ArrowDropDown
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -26,6 +27,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
@@ -53,6 +55,22 @@ fun WorkoutEntryScreen(
     viewModel: WorkoutEntryViewModel = viewModel(factory = ZoomiViewModelProvider.Factory)
 ) {
     val coroutineScope = rememberCoroutineScope()
+    var showSuccessDialog by remember { mutableStateOf(false) }
+
+    if (showSuccessDialog) {
+        AlertDialog(
+            onDismissRequest = {},
+            title = { Text("workout saved") },
+            text = { Text("your workout has been saved") },
+            confirmButton = {
+                TextButton(onClick = {
+                    showSuccessDialog = false
+                    navigateBack()}) {
+                    Text("OK")
+                }
+            }
+        )
+    }
 
     Scaffold(
         topBar = {
@@ -79,7 +97,7 @@ fun WorkoutEntryScreen(
               onSaveClick = {
                   coroutineScope.launch {
                       viewModel.saveWorkout()
-                      navigateBack()
+                      showSuccessDialog = true
                   }
               },
               modifier = Modifier.padding(innerPadding)
