@@ -13,17 +13,19 @@ import androidx.compose.ui.platform.LocalContext
 
 private val DarkColorScheme = darkColorScheme(
     primary = White,
+    onPrimary = White,
     secondary = Green,
     tertiary = Orange,
-    background = Color(0xFF2E7D32),
+    background = DarkGrey,
     surface = Color(0xFF2E7D32),
 )
 
 private val LightColorScheme = lightColorScheme(
-    primary = White,
+    primary = Black,
+    onPrimary = Black,
     secondary = Green,
     tertiary = Orange,
-    background = Color(0xFF2E7D32),
+    background = White,
     surface = Color(0xFF2E7D32),
 
     /* Other default colors to override
@@ -41,7 +43,7 @@ private val LightColorScheme = lightColorScheme(
 fun ZoomiTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     // Dynamic color is available on Android 12+
-    dynamicColor: Boolean = true,
+    dynamicColor: Boolean = false, // Sets it so i can manually set the theme colors
     content: @Composable () -> Unit
 ) {
     val colorScheme = when {
