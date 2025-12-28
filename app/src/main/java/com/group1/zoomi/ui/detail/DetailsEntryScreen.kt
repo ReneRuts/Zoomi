@@ -16,6 +16,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -35,6 +36,8 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.group1.zoomi.R
 import com.group1.zoomi.data.Workout
 import com.group1.zoomi.ui.ZoomiViewModelProvider
+import com.group1.zoomi.ui.theme.Blue
+import com.group1.zoomi.ui.theme.Green
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -51,7 +54,7 @@ fun DetailsEntryScreen(
             TopAppBar(
                 title = { Text(stringResource(R.string.details_header)) },
                 colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.primaryContainer,
+                    containerColor = MaterialTheme.colorScheme.tertiary,
                     titleContentColor = MaterialTheme.colorScheme.onPrimaryContainer
                 ),
                 navigationIcon = {
@@ -135,7 +138,11 @@ fun DetailsEntryBody(
 
         Button(
             onClick = onDownloadClick,
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth(),
+            colors = ButtonDefaults.buttonColors(
+                containerColor = Blue,
+                contentColor = MaterialTheme.colorScheme.onPrimary
+            )
         ) {
             Text(stringResource(R.string.download_workout))
         }
