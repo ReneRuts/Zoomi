@@ -3,8 +3,8 @@ package com.group1.zoomi.ui.detail
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -12,9 +12,11 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -32,6 +34,8 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.group1.zoomi.R
@@ -43,7 +47,7 @@ import com.group1.zoomi.ui.ZoomiViewModelProvider
 fun DetailsEntryScreen(
     navigateBack: () -> Unit,
     workoutId: Int,
-    viewModel: DetailsViewModel = viewModel(factory = ZoomiViewModelProvider .Factory)
+    viewModel: DetailsViewModel = viewModel(factory = ZoomiViewModelProvider.Factory)
 ) {
     val workoutDetails by viewModel.getWorkoutDetails(workoutId).collectAsState()
 
@@ -107,7 +111,6 @@ fun DetailsEntryBody(
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .background(color = MaterialTheme.colorScheme.primaryContainer, shape = RoundedCornerShape(8.dp))
                 .clip(RoundedCornerShape(8.dp))
         ) {
             Image(
@@ -115,65 +118,110 @@ fun DetailsEntryBody(
                 contentDescription = workout.title,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(250.dp)
-                    .padding(bottom = 8.dp),
+                    .height(250.dp),
                 contentScale = ContentScale.Crop
             )
 
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
+                    .background(MaterialTheme.colorScheme.primaryContainer)
                     .padding(16.dp)
             ) {
                 Text(
                     text = workout.title,
-                    style = MaterialTheme.typography.headlineLarge
+                    style = MaterialTheme.typography.headlineLarge,
+                    modifier = Modifier.fillMaxWidth(),
+                    textAlign = TextAlign.Center
                 )
-                Spacer(modifier = Modifier.height(16.dp))
 
-                DetailRow(label = "Type", value = workout.type)
-                Spacer(modifier = Modifier.height(12.dp))
+                HorizontalDivider()
 
-                DetailRow(
-                    label = "Duration",
-                    value = "${workout.durationHours}h ${workout.durationMinutes}m"
-                )
-                Spacer(modifier = Modifier.height(12.dp))
-
-                DetailRow(label = "Weather", value = workout.weatherInfo)
-                Spacer(modifier = Modifier.height(12.dp))
-
-                DetailRow(label = "Min Heartbeat", value = workout.minHeartbeat?.toString() ?: "N/A")
-                Spacer(modifier = Modifier.height(12.dp))
-
-                DetailRow(label = "Max Heartbeat", value = workout.maxHeartbeat?.toString() ?: "N/A")
-                Spacer(modifier = Modifier.height(12.dp))
-
-                DetailRow(label = "Distance", value = workout.distance?.toString() ?: "N/A")
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    DetailItem("Type", workout.type, modifier = Modifier.weight(1f))
+                    VerticalDivider()
+                    DetailItem(
+                        "Duration",
+                        "${workout.durationHours}h ${workout.durationMinutes}m",
+                        modifier = Modifier.weight(1f)
+                    )
+                }
+                HorizontalDivider()
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    DetailItem("Weather", workout.weatherInfo, modifier = Modifier.weight(1f))
+                    VerticalDivider()
+                    DetailItem(
+                        "Distance",
+                        workout.distance?.toString()?.let { "$it km" } ?: "N/A",
+                        modifier = Modifier.weight(1f)
+                    )
+                }
+                HorizontalDivider()
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    DetailItem(
+                        "Min Heartbeat",
+                        workout.minHeartbeat?.toString()?.plus(" bpm") ?: "N/A",
+                        modifier = Modifier.weight(1f)
+                    )
+                    VerticalDivider()
+                    DetailItem(
+                        "Max Heartbeat",
+                        workout.maxHeartbeat?.toString()?.plus(" bpm") ?: "N/A",
+                        modifier = Modifier.weight(1f)
+                    )
+                }
             }
         }
     }
 }
 
 @Composable
-private fun DetailRow(
-    label: String,
-    value: String,
-    modifier: Modifier = Modifier
-) {
-    Row(
-        modifier = modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.CenterVertically
+private fun DetailItem(label: String, value: String, modifier: Modifier = Modifier) {
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = modifier.padding(vertical = 8.dp)
     ) {
         Text(
-            text = label
+            text = label,
+            style = MaterialTheme.typography.labelLarge,
+            color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.6f)
         )
         Text(
-            text = value
+            text = value,
+            style = MaterialTheme.typography.headlineSmall,
+            fontWeight = FontWeight.Bold,
+            color = MaterialTheme.colorScheme.onPrimaryContainer
         )
     }
 }
+
+@Composable
+private fun HorizontalDivider() {
+    Divider(
+        color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.2f),
+        modifier = Modifier.padding(vertical = 8.dp)
+    )
+}
+
+@Composable
+private fun VerticalDivider() {
+    Box(
+        Modifier
+            .height(60.dp)
+            .width(1.dp)
+            .background(color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.2f))
+    )
+}
+
 
 @DrawableRes
 private fun getWorkoutImage(workout: Workout): Int {
