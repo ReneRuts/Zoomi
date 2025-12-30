@@ -1,6 +1,7 @@
 package com.group1.zoomi.ui.login
 
 import android.content.Context
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -8,7 +9,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
@@ -20,11 +23,15 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.group1.zoomi.R
+import com.group1.zoomi.ui.theme.Green
 import com.group1.zoomi.ui.theme.ZoomiTheme
 import com.scottyab.rootbeer.RootBeer
+
 
 @Composable
 fun LoginScreen(
@@ -48,6 +55,14 @@ fun LoginScreen(
         )
 
         Spacer(modifier = Modifier.height(24.dp))
+
+        Image(
+            painter = painterResource(R.drawable.umizoomi_bot),
+            contentDescription = "robot picture",
+            modifier = Modifier.size(200.dp)
+        )
+        Spacer(modifier = Modifier.height(24.dp))
+
 
         OutlinedTextField(
             value = username,
@@ -90,7 +105,12 @@ fun LoginScreen(
 
                 }
             },
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth(),
+            colors = ButtonDefaults.buttonColors(
+                containerColor = Green,
+                contentColor = MaterialTheme.colorScheme.onPrimary
+
+            )
         ) {
             Text("Login")
         }
