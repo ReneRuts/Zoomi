@@ -20,6 +20,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -43,6 +44,9 @@ import com.group1.zoomi.data.Workout
 import com.group1.zoomi.model.WeatherData
 import com.group1.zoomi.ui.ZoomiViewModelProvider
 import androidx.navigation.NavController
+import com.group1.zoomi.ui.theme.Blue
+import com.group1.zoomi.ui.theme.Green
+import com.group1.zoomi.ui.theme.Orange
 
 
 @Composable
@@ -156,7 +160,7 @@ fun WorkoutCard(
                 Text(
                     text = "${workout.durationHours}h ${workout.durationMinutes}m",
                     modifier = Modifier.padding(start = 8.dp),
-                    style = MaterialTheme.typography.bodyLarge
+                    style = MaterialTheme.typography.bodyLarge,
                 )
             }
         }
@@ -190,7 +194,15 @@ fun HeaderUi(onLogout: () -> Unit, weather: WeatherData?, rainChance: Int?, modi
             },
             style = MaterialTheme.typography.titleMedium
         )
-        Button(onClick = { onLogout() }, modifier = Modifier.padding(start = 16.dp)) {
+        Button(
+            onClick = { onLogout() },
+            modifier = Modifier.padding(start = 16.dp),
+
+            colors = ButtonDefaults.buttonColors(
+                containerColor = Blue,
+                contentColor = MaterialTheme.colorScheme.onPrimary
+            )
+        ) {
             Text(stringResource(R.string.logout_button))
         }
     }
@@ -202,7 +214,12 @@ fun FooterUi(modifier: Modifier = Modifier, onAddWorkoutClick: () -> Unit) {
         onClick = { onAddWorkoutClick() },
         modifier = modifier
             .fillMaxWidth()
-            .padding(16.dp)
+            .padding(16.dp),
+        colors = ButtonDefaults.buttonColors(
+            containerColor = Green,
+            contentColor = MaterialTheme.colorScheme.onPrimary
+
+    )
     ) {
         Text(stringResource(R.string.add_workout))
     }

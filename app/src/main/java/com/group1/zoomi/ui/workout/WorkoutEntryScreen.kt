@@ -17,6 +17,7 @@ import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuBox
@@ -45,6 +46,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.group1.zoomi.R
 import com.group1.zoomi.ui.ZoomiViewModelProvider
+import com.group1.zoomi.ui.theme.Orange
 import com.group1.zoomi.ui.workout.WorkoutEntryViewModel.WorkoutUiState
 import kotlinx.coroutines.launch
 
@@ -77,7 +79,7 @@ fun WorkoutEntryScreen(
             TopAppBar(
                 title = { Text(stringResource(R.string.add_new_workout)) },
                 colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.primaryContainer,
+                    containerColor = MaterialTheme.colorScheme.secondary,
                     titleContentColor = MaterialTheme.colorScheme.onPrimaryContainer
                 ),
                 navigationIcon = {
@@ -127,7 +129,11 @@ fun WorkoutEntryBody(
             onClick = onSaveClick,
             enabled = workoutUiState.isValid(),
             shape = MaterialTheme.shapes.small,
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth(),
+            colors = ButtonDefaults.buttonColors(
+                containerColor = Orange,
+                contentColor = MaterialTheme.colorScheme.onPrimary
+            )
         ) {
             Text(stringResource(R.string.save_workout))
         }
