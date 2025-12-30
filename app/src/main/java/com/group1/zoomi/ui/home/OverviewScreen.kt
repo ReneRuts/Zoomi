@@ -22,6 +22,7 @@ import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -30,6 +31,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -73,27 +75,31 @@ fun OverviewScreen(
     LaunchedEffect(Unit) {
         launcher.launch(Manifest.permission.ACCESS_FINE_LOCATION)
     }
+    Surface(
+        modifier = Modifier.fillMaxSize(),
+        color = Color.LightGray
+    ) {
+        Column(modifier = modifier.fillMaxSize()) {
 
-    Column(modifier = modifier.fillMaxSize()) {
+            // 🔹 Static header
+            HeaderUi(onLogout, weather, rainChance)
 
-        // 🔹 Static header
-        HeaderUi(onLogout, weather, rainChance)
-
-        // 🔹 Scrollable list
-        LazyColumn(
-            modifier = Modifier.weight(1f)
-        ) {
-            items(overviewUiState.workoutList) { workout ->
-                WorkoutCard(workout = workout,
-                    onWorkoutClick = {
-                        navController.navigate("workoutDetails/${workout.workoutId}")
-                    }
-                )
+            // 🔹 Scrollable list
+            LazyColumn(
+                modifier = Modifier.weight(1f)
+            ) {
+                items(overviewUiState.workoutList) { workout ->
+                    WorkoutCard(workout = workout,
+                        onWorkoutClick = {
+                            navController.navigate("workoutDetails/${workout.workoutId}")
+                        }
+                    )
+                }
             }
-        }
 
-        // 🔹 Static footer
-        FooterUi(onAddWorkoutClick = onAddWorkoutClick)
+            // 🔹 Static footer
+            FooterUi(onAddWorkoutClick = onAddWorkoutClick)
+        }
     }
     if (locationPermissionDenied) {
         AlertDialog(
