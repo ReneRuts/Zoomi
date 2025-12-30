@@ -19,16 +19,16 @@ We have made a workout tracker application. In the app you can add workouts, rev
 | Status             |Description| Details                                                                                                                                                   |
 |--------------------|---|-----------------------------------------------------------------------------------------------------------------------------------------------------------|
 | :hourglass:        | **Application** |                                                                                                                                                           | 
-| :hourglass:        | 2 UI screens | dylan, gerbe                                                                                                                                              |
+| :heavy_check_mark:        | 2 UI screens | dylan, gerbe                                                                                                                                              |
 | :heavy_check_mark: | Secure API request | We are calling the open-meteo.com api to fetch the temperature and the windspeed to display it on the workout overview screen.                            |
 | :hourglass:        | API request with IDOR | rene                                                                                                                                                      |
 | :heavy_check_mark: | Connection to room database | the workouts are added in our ZoomiDatabase, every time you create a new workout using the "Add workout" button it gets the current weather of that time. |
 | :heavy_check_mark:                | Secure storage |  Giel                                                                                                                                                         |
 |                    |  |                                                                                                                                                           | 
 |        | **Security** |                                                                                                                                                           | 
-| :hourglass:                | Unsafe storage | gerbe                                                                                                                                                     |
+| :heavy_check_mark:                | Unsafe storage | gerbe                                                                                                                                                     |
 | :x:                | Malware | dylan                                                                                                                                                     |
-| :x:                | Frida functionality | gerbe                                                                                                                                                     |
+| :heavy_check_mark:                | Frida functionality | gerbe                                                                                                                                                     |
 | :heavy_check_mark:                | Detect root and block functionality | giel                                                                                                                                                      |
 
 
@@ -132,6 +132,43 @@ Small demo video:
 
 ### ![](ReadmeImages/Root.png) Root
 Implementation of the detecting root and block functionality.
+
+** 1. First we have to import the dependency Rootbeer.**
+  > This dependency is added via this import: `import com.scottyab.rootbeer.RootBeer`
+  > This dependency does a lot of checks to see if the device is rooted or not, like:
+  - Checks if there are apps present that manage root
+  - Checks for apps that could hide root
+  - Checks for dangerous properties(ro.debuggable and ro.secure) that indicate if it is a genuine android device or not.
+  - ...
+
+** 2. Then we create a function that checks if root is present and returns true or false depending on the outcome.**
+  > Function:
+  ```kotlin
+  private fun isRoot(context: Context): Boolean {
+    val rootBeer = RootBeer(context)
+    return rootBeer.isRooted
+}
+  ```
+
+** 3. Then add it so the function executes if the login button is clicked.**
+  > When root is detected it displays the error "cant't use rooted device" and it does not let you log in.
+  > When there is no root detected it checks if the credentials that are entered are correct or not.
+  > When both are correct it let's you log in.
+  > Code:
+  ```kotlin
+  Button(
+            onClick = {
+                if (isRoot(context)) {
+                    errorMessage = "Can't use rooted device!"
+                } else {
+                    if (validateCredentials(username, password)) {
+                        onLoginSuccess()
+                    } else {
+                        errorMessage = "Invalid credentials"
+                    }
+                }
+            }
+  ```
 
 ## Link to Panopto video
 https://
