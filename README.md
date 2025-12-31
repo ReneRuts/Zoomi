@@ -36,17 +36,17 @@ We have made a workout tracker application. In the app you can add workouts, rev
 Describe the implementation of the following topics.
 
 ### ![](ReadmeImages/Screenshot.png) Screenshots
-The login screen:
+#### The login screen:
 ![Login Screen](ReadmeImages/screenScreenshots/loginScreen.png)
 
-The workout overview screen:
-![Workout Overview Screen](ReadmeImages/screenScreenshots/workoutOverviewScreen.png)
+#### The workout overview screen:
+![Workout Overview Screen](ReadmeImages/screenScreenshots/overviewScreen.png)
 
-The workout detail screen:
-![Workout Detail Screen](ReadmeImages/screenScreenshots/workoutDetailScreen.png)
+#### The workout detail screen:
+![Workout Detail Screen](ReadmeImages/screenScreenshots/detailScreen.png)
 
-The add workout screen:
-![Add Workout Screen](ReadmeImages/screenScreenshots/addWorkoutScreen.png)
+#### The add workout screen:
+![Add Workout Screen](ReadmeImages/screenScreenshots/workoutEntryScreen.png)
 
 
 ### ![](ReadmeImages/API.png) Secure API request
