@@ -66,7 +66,7 @@ fun WorkoutEntryScreen(
             text = { Text("your workout has been saved") },
             confirmButton = {
                 TextButton(onClick = {
-                    showSuccessDialog = false
+                    showSuccessDialog = true
                     navigateBack()}) {
                     Text("OK")
                 }
