@@ -228,6 +228,7 @@ fun FooterUi(modifier: Modifier = Modifier, onAddWorkoutClick: () -> Unit) {
 @DrawableRes
 private fun getWorkoutImage(workout: Workout): Int {
     return when (workout.type) {
+        "Climbing" -> R.drawable.climbing
         "Cycling" -> R.drawable.cycling
         "Hiking" -> R.drawable.hiking
         "Running" -> R.drawable.running

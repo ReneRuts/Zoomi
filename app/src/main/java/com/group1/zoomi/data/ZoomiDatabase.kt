@@ -25,7 +25,7 @@ abstract class ZoomiDatabase : RoomDatabase() {
                 Room.databaseBuilder(
                     context.applicationContext, ZoomiDatabase::class.java, "zoomi_database"
                 )
-                    .fallbackToDestructiveMigration()
+                    .fallbackToDestructiveMigration(dropAllTables = true)
                     .build()
                     .also { Instance = it }
             }
