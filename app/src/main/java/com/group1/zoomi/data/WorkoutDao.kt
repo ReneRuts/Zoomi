@@ -28,4 +28,7 @@ interface WorkoutDao {
     // This is to be able to create testdata, not used otherwise
     @Query("DELETE FROM workouts")
     suspend fun clearAll()
+
+    @Query("DELETE FROM sqlite_sequence WHERE name = 'workouts'")
+    suspend fun resetPrimaryKey()
 }

@@ -5,9 +5,10 @@ import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFact
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.http.GET
-import retrofit2.http.Path
+import retrofit2.http.Headers
 import retrofit2.http.Query
 
 private const val BASE_URL = "https://api.open-meteo.com/"
@@ -37,23 +38,37 @@ object WeatherApi {
 
 
 @Serializable
-data class WorkoutNote(
+data class Feedback(
     val id: Int,
     val body: String
 )
 
-interface ZoomiPrivateApiService {
-    @GET("posts/{id}")
-    suspend fun getPrivateWorkoutNote(@Path("id") id: Int): WorkoutNote
+interface FeedbackApiService {
+    @Headers("Accept: application/vnd.pgrst.object+json")
+    @GET("feedback")
+    suspend fun getFeedback(@Query("id") id: String): Feedback
 }
 
-object ZoomiPrivateApi {
+object FeedbackApi {
+    private const val API_KEY = "sb_secret_156kKmZuZzwRbsdIT9Nsqg_6iPfWGKk"
+
+    private val okHttpClient = OkHttpClient.Builder()
+        .addInterceptor { chain ->
+            val request = chain.request().newBuilder()
+                .header("apikey", API_KEY)
+                .header("Authorization", "Bearer $API_KEY")
+                .build()
+            chain.proceed(request)
+        }.build()
+
     private val privateRetrofit = Retrofit.Builder()
         .addConverterFactory(json.asConverterFactory("application/json".toMediaType()))
-        .baseUrl("https://jsonplaceholder.typicode.com/")
+        .baseUrl("https://cbtzemxevdlvfhcwozgx.supabase.co/rest/v1/")
+        .client(okHttpClient)
         .build()
 
-    val retrofitService: ZoomiPrivateApiService by lazy {
-        privateRetrofit.create(ZoomiPrivateApiService::class.java)
+
+    val retrofitService: FeedbackApiService by lazy {
+        privateRetrofit.create(FeedbackApiService::class.java)
     }
 }

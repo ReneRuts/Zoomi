@@ -4,7 +4,6 @@ import android.content.ContentValues
 import android.content.Context
 import android.os.Build
 import android.provider.MediaStore
-import android.util.Log
 import android.widget.Toast
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -14,8 +13,8 @@ import androidx.lifecycle.viewModelScope
 import com.group1.zoomi.R
 import com.group1.zoomi.data.Workout
 import com.group1.zoomi.data.WorkoutsRepository
-import com.group1.zoomi.network.WorkoutNote
-import com.group1.zoomi.network.ZoomiPrivateApi
+import com.group1.zoomi.network.Feedback
+import com.group1.zoomi.network.FeedbackApi
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
@@ -26,7 +25,7 @@ class DetailsViewModel(
     private val workoutsRepository: WorkoutsRepository
 ) : ViewModel() {
 
-    var privateNote by mutableStateOf<WorkoutNote?>(null)
+    var privateNote by mutableStateOf<Feedback?>(null)
         private set
 
     fun getWorkoutDetails(workoutId: Int): StateFlow<Workout?> =
@@ -42,14 +41,11 @@ class DetailsViewModel(
         viewModelScope.launch {
             try {
                 val effectiveId = if (workoutId <= 0) 1 else (workoutId % 100).let { if (it == 0) 100 else it }
-                
-                Log.d("IDOR_TEST", "Fetching private feedback for ID: $effectiveId")
-                
-                val response = ZoomiPrivateApi.retrofitService.getPrivateWorkoutNote(effectiveId)
+
+                val response = FeedbackApi.retrofitService.getFeedback("eq.$effectiveId")
                 privateNote = response
             } catch (e: Exception) {
-                Log.e("IDOR_TEST", "Error fetching feedback", e)
-                privateNote = WorkoutNote(id = 0, body = "No feedback available for this workout yet (Check internet or proxy).")
+                privateNote = Feedback(id = 0, body = "No feedback available for this workout yet (Check internet or proxy).")
             }
         }
     }
@@ -60,6 +56,9 @@ class DetailsViewModel(
             Type: ${workout.type}
             Duration: ${workout.durationHours} hours and ${workout.durationMinutes} minutes
             Weather: ${workout.weatherInfo}
+            ${if (workout.distance != null) "Distance: ${workout.distance} km" else "Distance: N/A"}
+            ${if (workout.minHeartbeat != null) "Min Heartbeat: ${workout.minHeartbeat} bpm" else "Min Heartbeat: N/A"}
+            ${if (workout.maxHeartbeat != null) "Max Heartbeat: ${workout.maxHeartbeat} bpm" else "Max Heartbeat: N/A"}"}
             Coach Feedback: ${privateNote?.body ?: "N/A"}
         """.trimIndent()
     }
@@ -83,14 +82,26 @@ class DetailsViewModel(
             try {
                 resolver.openOutputStream(uri)?.use { outputStream ->
                     outputStream.write(formattedWorkout.toByteArray())
-                    Toast.makeText(context, context.getString(R.string.workout_saved_successfully), Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        context,
+                        context.getString(R.string.workout_saved_successfully),
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             } catch (e: Exception) {
                 e.printStackTrace()
-                Toast.makeText(context, context.getString(R.string.error_saving_file), Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    context,
+                    context.getString(R.string.error_saving_file),
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         } else {
-            Toast.makeText(context, context.getString(R.string.error_creating_file), Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+                context,
+                context.getString(R.string.error_creating_file),
+                Toast.LENGTH_SHORT
+            ).show()
         }
     }
 

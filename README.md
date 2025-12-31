@@ -16,27 +16,38 @@ We have made a workout tracker application. In the app you can add workouts, rev
 - :hourglass: = Work in progress
 
  
-| Status             |Description| Details                                                                                                                                                   |
-|--------------------|---|-----------------------------------------------------------------------------------------------------------------------------------------------------------|
-| :hourglass:        | **Application** |                                                                                                                                                           | 
-| :heavy_check_mark:        | 2 UI screens | dylan, gerbe                                                                                                                                              |
-| :heavy_check_mark: | Secure API request | We are calling the open-meteo.com api to fetch the temperature and the windspeed to display it on the workout overview screen.                            |
-| :hourglass:        | API request with IDOR | rene                                                                                                                                                      |
-| :heavy_check_mark: | Connection to room database | the workouts are added in our ZoomiDatabase, every time you create a new workout using the "Add workout" button it gets the current weather of that time. |
-| :heavy_check_mark:                | Secure storage |  Giel                                                                                                                                                         |
-|                    |  |                                                                                                                                                           | 
-|        | **Security** |                                                                                                                                                           | 
-| :heavy_check_mark:                | Unsafe storage | gerbe                                                                                                                                                     |
-| :x:                | Malware | dylan                                                                                                                                                     |
-| :heavy_check_mark:                | Frida functionality | gerbe                                                                                                                                                     |
-| :heavy_check_mark:                | Detect root and block functionality | giel                                                                                                                                                      |
+| Status             |Description| Details                                                                                                                                                                                                                             |
+|--------------------|---|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| :hourglass:        | **Application** |                                                                                                                                                                                                                                     | 
+| :heavy_check_mark: | 2 UI screens | dylan, gerbe                                                                                                                                                                                                                        |
+| :heavy_check_mark: | Secure API request | We are calling the open-meteo.com api to fetch the temperature and the windspeed to display it on the workout overview screen.                                                                                                      |
+| :heavy_check_mark: | API request with IDOR | We are calling an own api to fetch a coach's feedback for a workout, this request can be modified and if the user then downloads the workout with that changed feedback the feedback is also changed inside of the downloaded file. |
+| :heavy_check_mark: | Connection to room database | the workouts are added in our ZoomiDatabase, every time you create a new workout using the "Add workout" button it gets the current weather of that time.                                                                           |
+| :heavy_check_mark: | Secure storage | Giel                                                                                                                                                                                                                                |
+|                    |  |                                                                                                                                                                                                                                     | 
+|                    | **Security** |                                                                                                                                                                                                                                     | 
+| :heavy_check_mark: | Unsafe storage | gerbe                                                                                                                                                                                                                               |
+| :x:                | Malware | dylan                                                                                                                                                                                                                               |
+| :heavy_check_mark: | Frida functionality | gerbe                                                                                                                                                                                                                               |
+| :heavy_check_mark: | Detect root and block functionality | giel                                                                                                                                                                                                                                |
 
 
 ## Overview app
 Describe the implementation of the following topics.
 
 ### ![](ReadmeImages/Screenshot.png) Screenshots
-Give screenshots for every screen in the application. Give each screen an unique name.
+The login screen:
+![Login Screen](ReadmeImages/screenScreenshots/loginScreen.png)
+
+The workout overview screen:
+![Workout Overview Screen](ReadmeImages/screenScreenshots/workoutOverviewScreen.png)
+
+The workout detail screen:
+![Workout Detail Screen](ReadmeImages/screenScreenshots/workoutDetailScreen.png)
+
+The add workout screen:
+![Add Workout Screen](ReadmeImages/screenScreenshots/addWorkoutScreen.png)
+
 
 ### ![](ReadmeImages/API.png) Secure API request
 Request to server x retrieving JSON in the following format displayed in screen x.
@@ -45,13 +56,69 @@ Request to server x retrieving JSON in the following format displayed in screen 
 Request to server x retrieving JSON in the following format displayed in screen x.
 
 ### ![](ReadmeImages/Database.png) Room database
-Type of data stored in the database used in screen x and displayed in screen y.
+We are storing workouts in a room database.
+this is the layout of the types:
+```kotlin
+@Entity(tableName = "workouts")
+data class Workout(
+    @PrimaryKey(autoGenerate = true)
+    val workoutId: Int = 0,
+    val type: String,
+    val title: String,
+    val durationHours: Int,
+    val durationMinutes: Int,
+    val weatherInfo: String,
+    val minHeartbeat: Int?,
+    val maxHeartbeat: Int?,
+    val distance: Double?
+)
+```
 
 ### ![](ReadmeImages/Database.png) Secure storage
-Type of data stored used in screen x and displayed in screen y.
+You can download a workout from the detailsscreen of a workout. This gets stored into files on the device.
+```kotlin
+fun saveWorkoutDetails(context: Context, workout: Workout) {
+        val formattedWorkout = formatWorkoutDetails(workout)
+        val filename = "${workout.title.replace(" ", "_")}.txt"
+
+        val contentValues = ContentValues().apply {
+            put(MediaStore.MediaColumns.DISPLAY_NAME, filename)
+            put(MediaStore.MediaColumns.MIME_TYPE, "text/plain")
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                put(MediaStore.MediaColumns.RELATIVE_PATH, "Download/Zoomi")
+            }
+        }
+
+        val resolver = context.contentResolver
+        val uri = resolver.insert(MediaStore.Downloads.EXTERNAL_CONTENT_URI, contentValues)
+
+        if (uri != null) {
+            try {
+                resolver.openOutputStream(uri)?.use { outputStream ->
+                    outputStream.write(formattedWorkout.toByteArray())
+                    Toast.makeText(context, context.getString(R.string.workout_saved_successfully), Toast.LENGTH_SHORT).show()
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+                Toast.makeText(context, context.getString(R.string.error_saving_file), Toast.LENGTH_SHORT).show()
+            }
+        } else {
+            Toast.makeText(context, context.getString(R.string.error_creating_file), Toast.LENGTH_SHORT).show()
+        }
+    }
+```
+![a saved workout](ReadmeImages/savedWorkout.png)
 
 ### ![](ReadmeImages/Database.png) Unsecure storage
-Type of data stored used in screen x and displayed in screen y.
+We have a hardcoded user in our app, the credentials are saved unsecure like this:
+```kotlin
+private fun validateCredentials(userInput: String, passwdInput: String) : Boolean{
+    val passwd = "1234" // password: 1234
+    val username = "user" // username: user
+
+    return passwd == passwdInput && username == userInput
+}
+```
 
 ### ![](ReadmeImages/Notifications.png) Malware
 Implementation of malware.

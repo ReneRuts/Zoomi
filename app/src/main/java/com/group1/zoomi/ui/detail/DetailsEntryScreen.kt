@@ -42,7 +42,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.group1.zoomi.R
 import com.group1.zoomi.data.Workout
-import com.group1.zoomi.network.WorkoutNote
+import com.group1.zoomi.network.Feedback
 import com.group1.zoomi.ui.ZoomiViewModelProvider
 import com.group1.zoomi.ui.theme.Blue
 
@@ -97,7 +97,7 @@ fun DetailsEntryScreen(
 fun DetailsEntryBody(
     modifier: Modifier = Modifier,
     workout: Workout?,
-    privateNote: WorkoutNote?,
+    privateNote: Feedback?,
     onDownloadClick: () -> Unit = {}
 ) {
     if (workout == null) {
@@ -141,15 +141,24 @@ fun DetailsEntryBody(
         DetailRow(label = "Type", value = workout.type)
         Spacer(modifier = Modifier.height(12.dp))
 
-        DetailRow(
-            label = "Duration",
-            value = "${workout.durationHours}h ${workout.durationMinutes}m"
-        )
+        DetailRow(label = "Duration", value = "${workout.durationHours}h ${workout.durationMinutes}m")
         Spacer(modifier = Modifier.height(12.dp))
 
+        if(workout.distance != null) {
+            DetailRow(label = "Distance", value = "${workout.distance} km")
+            Spacer(modifier = Modifier.height(12.dp))
+        }
+        if(workout.minHeartbeat != null) {
+            DetailRow(label = "Min Heartbeat", value = "${workout.minHeartbeat} bpm")
+            Spacer(modifier = Modifier.height(12.dp))
+        }
+        if(workout.maxHeartbeat != null) {
+            DetailRow(label = "Max Heartbeat", value = "${workout.maxHeartbeat} bpm")
+            Spacer(modifier = Modifier.height(12.dp))
+        }
+
         DetailRow(label = "Weather", value = workout.weatherInfo)
-        
-        // --- IDOR DATA DISPLAY ---
+
         Spacer(modifier = Modifier.height(24.dp))
         Text(
             text = "Coach Private Feedback",
@@ -171,7 +180,6 @@ fun DetailsEntryBody(
                 style = MaterialTheme.typography.bodyMedium
             )
         }
-        // -------------------------
 
         Spacer(modifier = Modifier.height(32.dp))
 
@@ -214,6 +222,7 @@ private fun DetailRow(
 @DrawableRes
 private fun getWorkoutImage(workout: Workout): Int {
     return when (workout.type) {
+        "Climbing" -> R.drawable.climbing
         "Cycling" -> R.drawable.cycling
         "Hiking" -> R.drawable.hiking
         "Running" -> R.drawable.running

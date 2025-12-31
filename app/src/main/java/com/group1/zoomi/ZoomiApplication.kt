@@ -16,10 +16,10 @@ class ZoomiApplication : Application() {
         super.onCreate()
         container = AppDataContainer(this)
 
-        // bij het opstarten van de app maakt hij deze testdata uit, comment het uit om niet te hebben
         CoroutineScope(Dispatchers.IO).launch {
             val workoutDao = ZoomiDatabase.getDatabase(this@ZoomiApplication).workoutDao()
             workoutDao.clearAll()
+            workoutDao.resetPrimaryKey()
             workoutDao.insert(
                 Workout(
                     type = "Running",
@@ -46,11 +46,11 @@ class ZoomiApplication : Application() {
             )
             workoutDao.insert(
                 Workout(
-                    type = "Yoga",
-                    title = "Evening Relaxation",
+                    type = "Climbing",
+                    title = "Just the Mount Everest",
                     durationHours = 0,
                     durationMinutes = 45,
-                    weatherInfo = "Indoors",
+                    weatherInfo = "Freezing cold!!!!!!!!, no air",
                     minHeartbeat = null,
                     maxHeartbeat = null,
                     distance = null
