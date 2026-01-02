@@ -180,7 +180,99 @@ private fun validateCredentials(userInput: String, passwdInput: String) : Boolea
 ```
 
 ### ![](ReadmeImages/Notifications.png) Malware
-Implementation of malware.
+First install the following tools with wsl:
+- apktool
+- keytool
+- apksigner
+- zipalign
+`sudo apt install apktool keytool apksigner zipalign`
+
+use the created apk of the app to decompile it using apktool with the following command:
+
+using WSL do:
+`apktool d zoomi.apk -o zoomi-decomp`
+[decompiling screenshot](ReadmeImages/malware/decomp_zoomi.png)
+
+now we must edit the `Smali` file "Loginscreenkt.smali" so the password and username are swapped
+inside the Loginscreenkt.smali file we editted the following lines from this:
+```smali
+    .line 121
+    const-string v0, "1234"
+
+    .line 122
+    .local v0, "passwd":Ljava/lang/String;
+    const-string v1, "user"
+```
+to this:
+```smali
+    .line 121
+    const-string v0, "user"
+
+    .line 122
+    .local v0, "passwd":Ljava/lang/String;
+    const-string v1, "1234"
+```
+and as small extra for a give away of what the malware did we changed this:
+```smali
+validateCredentials(Ljava/lang/String;Ljava/lang/String;)Z
+
+    move-result v0
+
+    if-eqz v0, :cond_1
+
+    .line 101
+    invoke-interface {p1}, Lkotlin/jvm/functions/Function0;->invoke()Ljava/lang/Object;
+
+    goto :goto_0
+
+    .line 103
+    :cond_1
+    const-string v0, "Invalid credentials"
+```
+to this:
+```smali
+validateCredentials(Ljava/lang/String;Ljava/lang/String;)Z
+
+    move-result v0
+
+    if-eqz v0, :cond_1
+
+    .line 101
+    invoke-interface {p1}, Lkotlin/jvm/functions/Function0;->invoke()Ljava/lang/Object;
+
+    goto :goto_0
+
+    .line 103
+    :cond_1
+    const-string v0, "Baaah something got changed, get hacked, learn to create android apps, or just swap memory"
+```
+now we need to recompile the apk using the following command
+
+`apktool b zoomi-decomp -o zoomi-recomp.apk`
+[recompile zoomi with malware](ReadmeImages/malware/recomp_zoomi.png))
+
+to be sure nothing is changed we need to zipalign the new apk.
+`zipalign -p -f -v 4 zoomi-recomp.apk zoomi-aligned.apk`
+
+We need to have a key to sign the application, we can do so using the following command:
+
+`keytool -genkeypair -v -keystore key.jks -alias mykey -keyalg RSA -keysize 2048 -validity 100000`
+[create key](ReadmeImages/malware/create_key.png)
+
+then we need to sign the application
+
+`apksigner sign --ks key.jks --ks-key-alias mykey zoomi-aligned.apk`
+
+then we need to adb install the app to inject the malware version of it.
+
+`adb root`
+`adb install zoomi-aligned.apk`
+
+Then when launching the app you'll see that it's changed.
+[new error message](ReadmeImages/malware/malware_message.png)
+Normally we have a user user with the password "1234"
+
+but the malware changed it so those are swapped
 
 ### ![](ReadmeImages/Frida.png) Frida
 We're going to bypass the isRoot() function to bypass the Root detection
