@@ -50,11 +50,70 @@ Describe the implementation of the following topics.
 
 
 ### ![](ReadmeImages/API.png) Secure API request
-Request to server x retrieving JSON in the following format displayed in screen x.
+We are sending a request to the open-meteo.com api to fetch the temperature, the windspeed and the chance of rain for the current location to display it on the overviewscreen.
+
+We get the json in this format:
+```json
+{
+  "latitude": 51.178,
+  "longitude": 4.205,
+  "generationtime_ms": 0.126838684082031,
+  "utc_offset_seconds": 3600,
+  "timezone": "Europe/Brussels",
+  "timezone_abbreviation": "GMT+1",
+  "elevation": 14,
+  "current_weather_units": {
+    "time": "iso8601",
+    "interval": "seconds",
+    "temperature": "°C",
+    "windspeed": "km/h",
+    "winddirection": "°",
+    "is_day": "",
+    "weathercode": "wmo code"
+  },
+  "current_weather": {
+    "time": "2026-01-02T13:15",
+    "interval": 900,
+    "temperature": 3.8,
+    "windspeed": 23.8,
+    "winddirection": 277,
+    "is_day": 1,
+    "weathercode": 3
+  },
+  "daily_units": {
+    "time": "iso8601",
+    "precipitation_probability_max": "%"
+  },
+  "daily": {
+    "time": [
+      "2026-01-02",
+      "2026-01-03",
+      "2026-01-04",
+      "2026-01-05",
+      "2026-01-06",
+      "2026-01-07",
+      "2026-01-08"
+    ],
+    "precipitation_probability_max": [78, 69, 72, 22, 22, 22, 37]
+  }
+}
+```
+And we display it on the screen like this:
+![current weather](ReadmeImages/screenScreenshots/currentWeather.png)
+
 
 ### ![](ReadmeImages/API.png) API request with IDOR
-Request to server x retrieving JSON in the following format displayed in screen x.
+We are calling our [own api](https://supabase.co) to fetch a coach's feedback for a workout, this request can be modified and if the user then downloads the workout with that changed feedback the feedback is also changed inside of the downloaded file.
 
+We get the json in this format
+```json
+[
+    {
+        "id": 3,
+        "body": "That climb showed real grit and discipline. You paced yourself well, stayed focused when the altitude pushed back, and made smart decisions instead of rushing. Keep building that strength and awareness — the mountain rewards consistency, and you’re clearly on the right path."
+    }
+]
+```
 ### ![](ReadmeImages/Database.png) Room database
 We are storing workouts in a room database.
 this is the layout of the types:
