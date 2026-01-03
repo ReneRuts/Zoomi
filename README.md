@@ -193,7 +193,12 @@ using WSL do:
 `apktool d zoomi.apk -o zoomi-decomp`
 [decompiling screenshot](ReadmeImages/malware/decomp_zoomi.png)
 
-now we must edit the `Smali` file "Loginscreenkt.smali" so the password and username are swapped
+now we must edit the `Smali` file "Loginscreenkt.smali"
+
+the file is located in:
+
+`"\zoomi-decomp\smali_classes7\com\group1\zoomi\ui\login\LoginScreenKt.smali"`
+
 inside the Loginscreenkt.smali file we editted the following lines from this:
 ```smali
     .line 121
@@ -212,6 +217,24 @@ to this:
     .local v0, "passwd":Ljava/lang/String;
     const-string v1, "1234"
 ```
+but since we're evil we also convert them to md5 hashes
+```smali
+    .line 121
+    const-string v0, "ee11cbb19052e40b07aac0ca060c23ee"
+
+    .line 122
+    .local v0, "passwd":Ljava/lang/String;
+    const-string v1, "81dc9bdb52d04dc20036dbd8313ed055"
+```
+Now we also change the logo of the app to an AI created meme which gives away what was changed:
+
+we did so by going into the following directory:
+
+`zoomi-decomp\res\drawable-nodpi`
+
+There we needed to rename the file from `new_logo.jpg` to the `umizoomi_bot.jpg` so the image got swapped with our malware image.
+![new logo](ReadmeImages/malware/new_logo.jpg)
+
 and as small extra for a give away of what the malware did we changed this:
 ```smali
 validateCredentials(Ljava/lang/String;Ljava/lang/String;)Z
@@ -270,9 +293,13 @@ then we need to adb install the app to inject the malware version of it.
 
 Then when launching the app you'll see that it's changed.
 [new error message](ReadmeImages/malware/malware_message.png)
-Normally we have a user user with the password "1234"
+Normally we have a user "user" with the password "1234"
 
-but the malware changed it so those are swapped
+but the malware changed it so those are swapped and then the malware also hashed them using the md5 hashing algorithm.
+
+End result:
+The username now is: `81dc9bdb52d04dc20036dbd8313ed055`
+The password now is: `ee11cbb19052e40b07aac0ca060c23ee`
 
 ### ![](ReadmeImages/Frida.png) Frida
 We're going to bypass the isRoot() function to bypass the Root detection
