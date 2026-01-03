@@ -1,6 +1,5 @@
 package com.group1.zoomi.ui.home
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.group1.zoomi.data.LocationRepository
@@ -59,22 +58,11 @@ class OverviewViewModel(
                         WeatherApi.retrofitService.getWeather(it.latitude, it.longitude)
                     _weatherState.value = weatherData
                     _rainChanceState.value = getRainChanceForToday(weatherData)
-                    _weatherErrorState.value = null // Reset error state
-                } catch (e: javax.net.ssl.SSLPeerUnverifiedException) {
-                    Log.e("OverviewViewModel", "SSL pinning failed", e)
-                    _weatherState.value = null
-                    _rainChanceState.value = null
-                    _weatherErrorState.value = "SSL pinning failed"
-                } catch (e: java.security.cert.CertificateException) {
-                    Log.e("OverviewViewModel", "Certificate pin failed", e)
-                    _weatherState.value = null
-                    _rainChanceState.value = null
-                    _weatherErrorState.value = "Certificate pin failed"
+                    _weatherErrorState.value = null
                 } catch (e: Exception) {
-                    Log.e("OverviewViewModel", "Error fetching weather data", e)
                     _weatherState.value = null
                     _rainChanceState.value = null
-                    _weatherErrorState.value = "Error fetching weather data"
+                    _weatherErrorState.value = "Using own proxy\nis not allowed"
                 }
             }
         }

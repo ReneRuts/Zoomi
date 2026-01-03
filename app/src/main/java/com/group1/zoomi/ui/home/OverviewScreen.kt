@@ -95,7 +95,7 @@ fun OverviewScreen(
         Column(modifier = modifier.fillMaxSize()) {
 
             // 🔹 Static header
-            HeaderUi(onLogout, weather, rainChance)
+            HeaderUi(onLogout, weather, rainChance, weatherError)
 
             // 🔹 Scrollable list
             LazyColumn(
@@ -177,7 +177,7 @@ fun WorkoutCard(
 }
 
 @Composable
-fun HeaderUi(onLogout: () -> Unit, weather: WeatherData?, rainChance: Int?, modifier: Modifier = Modifier) {
+fun HeaderUi(onLogout: () -> Unit, weather: WeatherData?, rainChance: Int?, weatherError: String? = null, modifier: Modifier = Modifier) {
 
     Row(
         modifier = Modifier
@@ -193,13 +193,16 @@ fun HeaderUi(onLogout: () -> Unit, weather: WeatherData?, rainChance: Int?, modi
             modifier = Modifier.size(72.dp)
         )
         Text(
-            text = if (weather != null) {
+            text = when {
+                weatherError != null -> weatherError
+                weather != null -> {
                 val rainText = if (rainChance != null) "Rain chance: $rainChance%" else ""
                 "Temp.: ${weather.currentWeather.temperature}°C\n" +
                         "Wind: ${weather.currentWeather.windspeed} km/h\n" +
                         rainText
-            } else {
-                stringResource(R.string.weather_loading)
+                }
+                else -> stringResource(R.string.weather_loading)
+
             },
             style = MaterialTheme.typography.titleMedium
         )
