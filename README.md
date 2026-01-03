@@ -7,7 +7,9 @@
 4. Dylan Van Goethem
 
 ## Project summary
-We have made a workout tracker application. In the app you can add workouts, review them later on, and so on
+We have created a fitness tracking application called Zoomi. The application allows users to log in, view a list of their workouts, and see the details of each workout.
+The app also fetches and displays the current weather conditions. 
+In addition to the core functionality, the project explores several mobile security concepts.
 
 ## Requirements
 ### ℹ️ Legend
@@ -16,41 +18,54 @@ We have made a workout tracker application. In the app you can add workouts, rev
 - :hourglass: = Work in progress
 
  
-| Status             |Description| Details                                                                                                                                                                                                                             |
-|--------------------|---|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| :hourglass:        | **Application** |                                                                                                                                                                                                                                     | 
-| :heavy_check_mark: | 2 UI screens | dylan, gerbe                                                                                                                                                                                                                        |
-| :heavy_check_mark: | Secure API request | We are calling the open-meteo.com api to fetch the temperature and the windspeed to display it on the workout overview screen.                                                                                                      |
-| :heavy_check_mark: | API request with IDOR | We are calling an own api to fetch a coach's feedback for a workout, this request can be modified and if the user then downloads the workout with that changed feedback the feedback is also changed inside of the downloaded file. |
-| :heavy_check_mark: | Connection to room database | the workouts are added in our ZoomiDatabase, every time you create a new workout using the "Add workout" button it gets the current weather of that time.                                                                           |
-| :heavy_check_mark: | Secure storage | Giel                                                                                                                                                                                                                                |
-|                    |  |                                                                                                                                                                                                                                     | 
-|                    | **Security** |                                                                                                                                                                                                                                     | 
-| :heavy_check_mark: | Unsafe storage | gerbe                                                                                                                                                                                                                               |
-| :heavy_check_mark:                | Malware | The malware swapped the username and password in the hardcoded function so that logging in is kind of a hell.                                                                                                                                                                                                                               |
-| :heavy_check_mark: | Frida functionality | gerbe                                                                                                                                                                                                                               |
-| :heavy_check_mark: | Detect root and block functionality | giel                                                                                                                                                                                                                                |
+| Status             | Description                         | Details                                                                                                                                                                                                                              |
+|--------------------|-------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| :heavy_check_mark: | **Application**                     |                                                                                                                                                                                                                                      | 
+| :heavy_check_mark: | 4 UI screens                        | We've got a Login, Overview, Detail and Addworkout screen.                                                                                                                                                                           |
+| :heavy_check_mark: | Secure API request                  | We are calling the open-meteo.com api to fetch the temperature and the windspeed to display it on the workout overview screen.                                                                                                       |
+| :heavy_check_mark: | API request with IDOR               | We are calling our own api to fetch a coach's feedback for a workout, this request can be modified and if the user then downloads the workout with that changed feedback the feedback is also changed inside of the downloaded file. |
+| :heavy_check_mark: | Connection to room database         | the workouts are added in our ZoomiDatabase, every time you create a new workout using the "Add workout" button it gets the current weather of that time.                                                                            |
+| :heavy_check_mark: | Secure storage                      | Users can save their workouts, they get added to their downloads folder inside the `Zoomi` folder.                                                                                                                                   |
+|                    |                                     |                                                                                                                                                                                                                                      | 
+| :heavy_check_mark: | **Security**                        |                                                                                                                                                                                                                                      | 
+| :heavy_check_mark: | Unsafe storage                      | We added the username and password unsafely to the loginscreen code. In a string and a comment.                                                                                                                                      |
+| :heavy_check_mark: | Malware                             | The malware swapped the username and password in the hardcoded function and also hashed them, then it also changes the app icon image so that logging in is kind of a hell.                                                          |
+| :heavy_check_mark: | Frida functionality                 | We wrote a script that can bypass our rootchecker & detection.                                                                                                                                                                       |
+| :heavy_check_mark: | Detect root and block functionality | We added a function that can detect if the device is rooted or not.                                                                                                                                                                  |
 
 
 ## Overview app
-Describe the implementation of the following topics.
 
 ### ![](ReadmeImages/Screenshot.png) Screenshots
 #### The login screen:
+Users can log in with their username and password.
+
+If the combination is not correct, they get a message that says "Invalid credentials".
+
 ![Login Screen](ReadmeImages/screenScreenshots/loginScreen.png)
 
 #### The workout overview screen:
+Users can view their workouts. but also at the top the current weather of their location.
+
 ![Workout Overview Screen](ReadmeImages/screenScreenshots/overviewScreen.png)
 
 #### The workout detail screen:
+Users can view more details about a specific workout and also get feedback from a private coach.
+
 ![Workout Detail Screen](ReadmeImages/screenScreenshots/detailScreen.png)
 
 #### The add workout screen:
+Users add a new workout.
+
 ![Add Workout Screen](ReadmeImages/screenScreenshots/workoutEntryScreen.png)
 
 
 ### ![](ReadmeImages/API.png) Secure API request
 We are sending a request to the open-meteo.com api to fetch the temperature, the windspeed and the chance of rain for the current location to display it on the overviewscreen.
+
+The api call looks like this:
+
+https://api.open-meteo.com/v1/forecast?current_weather=true&daily=precipitation_probability_max&latitude=51.178&longitude=4.205&timezone=auto
 
 We get the json in this format:
 ```json
@@ -99,11 +114,18 @@ We get the json in this format:
 }
 ```
 And we display it on the screen like this:
+
 ![current weather](ReadmeImages/screenScreenshots/currentWeather.png)
 
 
 ### ![](ReadmeImages/API.png) API request with IDOR
 We are calling our [own api](https://supabase.co) to fetch a coach's feedback for a workout, this request can be modified and if the user then downloads the workout with that changed feedback the feedback is also changed inside of the downloaded file.
+
+The api call looks like this:
+https://cbtzemxevdlvfhcwozgx.supabase.co/rest/v1/feedback?id=eq.1
+
+The required api key is inserted inside the headers.
+
 
 We get the json in this format
 ```json
@@ -166,6 +188,8 @@ fun saveWorkoutDetails(context: Context, workout: Workout) {
         }
     }
 ```
+Preview of a saved workout:
+
 ![a saved workout](ReadmeImages/savedWorkout.png)
 
 ### ![](ReadmeImages/Database.png) Unsecure storage
@@ -293,17 +317,20 @@ then we need to adb install the app to inject the malware version of it.
 `adb install zoomi-aligned.apk`
 
 Then when launching the app you'll see that it's changed.
+
 ![new error message](ReadmeImages/malware/malware_message.png)
 Normally we have a user "user" with the password "1234"
 
 but the malware changed it so those are swapped and then the malware also hashed them using the md5 hashing algorithm.
 
 End result:
+
 The username now is: `81dc9bdb52d04dc20036dbd8313ed055`
+
 The password now is: `ee11cbb19052e40b07aac0ca060c23ee`
 
 ### ![](ReadmeImages/Frida.png) Frida
-We're going to bypass the isRoot() function to bypass the Root detection
+We're going to bypass the `isRoot()` function to bypass the Root detection
 
 **1. Beforehand**
 

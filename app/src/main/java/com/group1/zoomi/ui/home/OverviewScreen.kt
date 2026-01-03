@@ -64,7 +64,6 @@ fun OverviewScreen(
     val overviewUiState by overviewViewModel.overviewUiState.collectAsState()
     val weather by overviewViewModel.weatherState.collectAsState()
     val rainChance by overviewViewModel.rainChanceState.collectAsState()
-
     val locationPermissionDenied by overviewViewModel.locationPermissionDenied.collectAsState()
 
     val launcher = rememberLauncherForActivityResult(
@@ -133,49 +132,6 @@ fun OverviewScreen(
     }
 }
 
-
-@Composable
-fun WorkoutCard(
-    workout: Workout,
-    modifier: Modifier = Modifier,
-    onWorkoutClick: () -> Unit
-) {
-
-    Card(modifier = modifier
-        .padding(8.dp)
-        .clickable { onWorkoutClick() }
-    ) {
-        Column {
-            Image(
-                painter = painterResource(id = getWorkoutImage(workout = workout)),
-                contentDescription = workout.title,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(194.dp),
-                contentScale = ContentScale.Crop
-            )
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(start = 16.dp, end = 16.dp, top = 16.dp),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                Text(
-                    text = workout.title,
-                    modifier = Modifier.weight(1f, fill = false),
-                    style = MaterialTheme.typography.headlineSmall
-                )
-                Text(
-                    text = "${workout.durationHours}h ${workout.durationMinutes}m",
-                    modifier = Modifier.padding(start = 8.dp),
-                    style = MaterialTheme.typography.bodyLarge,
-                )
-            }
-        }
-    }
-}
-
 @Composable
 fun HeaderUi(onLogout: () -> Unit, weather: WeatherData?, rainChance: Int?, weatherError: String? = null, modifier: Modifier = Modifier) {
 
@@ -216,6 +172,48 @@ fun HeaderUi(onLogout: () -> Unit, weather: WeatherData?, rainChance: Int?, weat
             )
         ) {
             Text(stringResource(R.string.logout_button))
+        }
+    }
+}
+
+@Composable
+fun WorkoutCard(
+    workout: Workout,
+    modifier: Modifier = Modifier,
+    onWorkoutClick: () -> Unit
+) {
+
+    Card(modifier = modifier
+        .padding(8.dp)
+        .clickable { onWorkoutClick() }
+    ) {
+        Column {
+            Image(
+                painter = painterResource(id = getWorkoutImage(workout = workout)),
+                contentDescription = workout.title,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(194.dp),
+                contentScale = ContentScale.Crop
+            )
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(start = 16.dp, end = 16.dp, top = 16.dp),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Text(
+                    text = workout.title,
+                    modifier = Modifier.weight(1f, fill = false),
+                    style = MaterialTheme.typography.headlineSmall
+                )
+                Text(
+                    text = "${workout.durationHours}h ${workout.durationMinutes}m",
+                    modifier = Modifier.padding(start = 8.dp),
+                    style = MaterialTheme.typography.bodyLarge,
+                )
+            }
         }
     }
 }

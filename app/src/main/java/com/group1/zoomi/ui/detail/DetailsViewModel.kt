@@ -24,10 +24,8 @@ import kotlinx.coroutines.launch
 class DetailsViewModel(
     private val workoutsRepository: WorkoutsRepository
 ) : ViewModel() {
-
     var privateNote by mutableStateOf<Feedback?>(null)
         private set
-
     fun getWorkoutDetails(workoutId: Int): StateFlow<Workout?> =
         workoutsRepository.getWorkout(workoutId)
             .map { it }
@@ -36,7 +34,6 @@ class DetailsViewModel(
                 started = SharingStarted.WhileSubscribed(TIMEOUT_MILLIS),
                 initialValue = null
             )
-
     fun fetchPrivateFeedback(workoutId: Int) {
         viewModelScope.launch {
             try {
@@ -58,7 +55,7 @@ class DetailsViewModel(
             Weather: ${workout.weatherInfo}
             ${if (workout.distance != null) "Distance: ${workout.distance} km" else "Distance: N/A"}
             ${if (workout.minHeartbeat != null) "Min Heartbeat: ${workout.minHeartbeat} bpm" else "Min Heartbeat: N/A"}
-            ${if (workout.maxHeartbeat != null) "Max Heartbeat: ${workout.maxHeartbeat} bpm" else "Max Heartbeat: N/A"}"}
+            ${if (workout.maxHeartbeat != null) "Max Heartbeat: ${workout.maxHeartbeat} bpm" else "Max Heartbeat: N/A"}
             Coach Feedback: ${privateNote?.body ?: "N/A"}
         """.trimIndent()
     }
@@ -84,7 +81,7 @@ class DetailsViewModel(
                     outputStream.write(formattedWorkout.toByteArray())
                     Toast.makeText(
                         context,
-                        context.getString(R.string.workout_saved_successfully),
+                        context.getString(R.string.workout_saved_successfully), //no stringResource because it's a viewmodel so no composables
                         Toast.LENGTH_SHORT
                     ).show()
                 }

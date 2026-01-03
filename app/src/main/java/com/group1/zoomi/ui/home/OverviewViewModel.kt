@@ -1,7 +1,9 @@
 package com.group1.zoomi.ui.home
 
+import androidx.annotation.DrawableRes
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.group1.zoomi.R
 import com.group1.zoomi.data.LocationRepository
 import com.group1.zoomi.data.Workout
 import com.group1.zoomi.data.WorkoutsRepository
@@ -30,23 +32,18 @@ class OverviewViewModel(
         )
 
     private val _locationState = MutableStateFlow<LocationData?>(null)
-    val locationState: StateFlow<LocationData?> = _locationState
-
     private val _weatherState = MutableStateFlow<WeatherData?>(null)
     val weatherState: StateFlow<WeatherData?> = _weatherState
-
     private val _rainChanceState = MutableStateFlow<Int?>(null)
     val rainChanceState: StateFlow<Int?> = _rainChanceState
-
     private val _locationPermissionDenied = MutableStateFlow(false)
     val locationPermissionDenied: StateFlow<Boolean> = _locationPermissionDenied
+    private val _weatherErrorState = MutableStateFlow<String?>(null)
+    val weatherErrorState: StateFlow<String?> = _weatherErrorState
 
     fun setLocationPermissionDenied(value: Boolean) {
         _locationPermissionDenied.value = value
     }
-
-    private val _weatherErrorState = MutableStateFlow<String?>(null)
-    val weatherErrorState: StateFlow<String?> = _weatherErrorState
 
     fun fetchLocation() {
         viewModelScope.launch {

@@ -26,7 +26,7 @@ class ZoomiApplication : Application() {
                     title = "Morning Park Run",
                     durationHours = 1,
                     durationMinutes = 30,
-                    weatherInfo = "15°C, Sunny",
+                    weatherInfo = "15°C, 20.2 km/h",
                     minHeartbeat = 134,
                     maxHeartbeat = 210,
                     distance = 10.5
@@ -38,7 +38,7 @@ class ZoomiApplication : Application() {
                     title = "Full Body Strength",
                     durationHours = 0,
                     durationMinutes = 15,
-                    weatherInfo = "Indoors",
+                    weatherInfo = "14.2°C, 18.5 km/h",
                     minHeartbeat = 100,
                     maxHeartbeat = 140,
                     distance = null
@@ -50,7 +50,7 @@ class ZoomiApplication : Application() {
                     title = "Just the Mount Everest",
                     durationHours = 0,
                     durationMinutes = 45,
-                    weatherInfo = "Freezing cold!!!!!!!!, no air",
+                    weatherInfo = "-31.5°C, 10.5 km/h",
                     minHeartbeat = null,
                     maxHeartbeat = null,
                     distance = null

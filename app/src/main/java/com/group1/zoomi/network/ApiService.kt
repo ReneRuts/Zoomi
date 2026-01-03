@@ -12,14 +12,27 @@ import retrofit2.http.Headers
 import retrofit2.http.Query
 
 private const val BASE_URL = "https://api.open-meteo.com/"
+private const val FEEDBACK_BASE_URL = "https://cbtzemxevdlvfhcwozgx.supabase.co/rest/v1/"
+private const val FEEDBACK_API_KEY = "sb_secret_156kKmZuZzwRbsdIT9Nsqg_6iPfWGKk"
 
 private val json = Json { ignoreUnknownKeys = true }
 
-private val retrofit = Retrofit.Builder()
-    .addConverterFactory(json.asConverterFactory("application/json".toMediaType()))
-    .baseUrl(BASE_URL)
-    .build()
+object WeatherApi {
+    val retrofitService: WeatherApiService by lazy {
+        weatherRetrofit.create(WeatherApiService::class.java)
+    }
+}
+object FeedbackApi {
+    val retrofitService: FeedbackApiService by lazy {
+        feedbackRetrofit.create(FeedbackApiService::class.java)
+    }
+}
 
+@Serializable
+data class Feedback(
+    val id: Int,
+    val body: String
+)
 interface WeatherApiService {
     @GET("v1/forecast?current_weather=true&daily=precipitation_probability_max")
     suspend fun getWeather(
@@ -29,46 +42,29 @@ interface WeatherApiService {
     ): WeatherData
 }
 
-object WeatherApi {
-    val retrofitService: WeatherApiService by lazy {
-        retrofit.create(WeatherApiService::class.java)
-    }
-}
-
-
-
-@Serializable
-data class Feedback(
-    val id: Int,
-    val body: String
-)
-
 interface FeedbackApiService {
     @Headers("Accept: application/vnd.pgrst.object+json")
     @GET("feedback")
-    suspend fun getFeedback(@Query("id") id: String): Feedback
+    suspend fun getFeedback(
+        @Query("id") id: String
+    ): Feedback
 }
+private val okHttpClient = OkHttpClient.Builder()
+    .addInterceptor { chain ->
+        val request = chain.request().newBuilder()
+            .header("apikey", FEEDBACK_API_KEY)
+            .header("Authorization", "Bearer $FEEDBACK_API_KEY")
+            .build()
+        chain.proceed(request)
+    }.build()
 
-object FeedbackApi {
-    private const val API_KEY = "sb_secret_156kKmZuZzwRbsdIT9Nsqg_6iPfWGKk"
+private val feedbackRetrofit = Retrofit.Builder()
+    .addConverterFactory(json.asConverterFactory("application/json".toMediaType()))
+    .baseUrl(FEEDBACK_BASE_URL)
+    .client(okHttpClient)
+    .build()
 
-    private val okHttpClient = OkHttpClient.Builder()
-        .addInterceptor { chain ->
-            val request = chain.request().newBuilder()
-                .header("apikey", API_KEY)
-                .header("Authorization", "Bearer $API_KEY")
-                .build()
-            chain.proceed(request)
-        }.build()
-
-    private val privateRetrofit = Retrofit.Builder()
-        .addConverterFactory(json.asConverterFactory("application/json".toMediaType()))
-        .baseUrl("https://cbtzemxevdlvfhcwozgx.supabase.co/rest/v1/")
-        .client(okHttpClient)
-        .build()
-
-
-    val retrofitService: FeedbackApiService by lazy {
-        privateRetrofit.create(FeedbackApiService::class.java)
-    }
-}
+private val weatherRetrofit = Retrofit.Builder()
+    .addConverterFactory(json.asConverterFactory("application/json".toMediaType()))
+    .baseUrl(BASE_URL)
+    .build()
