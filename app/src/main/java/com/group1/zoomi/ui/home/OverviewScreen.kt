@@ -2,6 +2,7 @@ package com.group1.zoomi.ui.home
 
 import android.Manifest
 import android.app.Activity
+import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.DrawableRes
@@ -59,6 +60,7 @@ fun OverviewScreen(
 
 ) {
 
+    val context = LocalContext.current
     val overviewUiState by overviewViewModel.overviewUiState.collectAsState()
     val weather by overviewViewModel.weatherState.collectAsState()
     val rainChance by overviewViewModel.rainChanceState.collectAsState()
@@ -75,6 +77,13 @@ fun OverviewScreen(
             }
         }
     )
+
+    val weatherError by overviewViewModel.weatherErrorState.collectAsState()
+    LaunchedEffect(weatherError) {
+        weatherError?.let {
+            Toast.makeText(context, it, Toast.LENGTH_LONG).show()
+        }
+    }
 
     LaunchedEffect(Unit) {
         launcher.launch(Manifest.permission.ACCESS_FINE_LOCATION)
