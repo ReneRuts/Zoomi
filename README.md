@@ -27,7 +27,7 @@ We have made a workout tracker application. In the app you can add workouts, rev
 |                    |  |                                                                                                                                                                                                                                     | 
 |                    | **Security** |                                                                                                                                                                                                                                     | 
 | :heavy_check_mark: | Unsafe storage | gerbe                                                                                                                                                                                                                               |
-| :x:                | Malware | dylan                                                                                                                                                                                                                               |
+| :heavy_check_mark:                | Malware | The malware swapped the username and password in the hardcoded function so that logging in is kind of a hell.                                                                                                                                                                                                                               |
 | :heavy_check_mark: | Frida functionality | gerbe                                                                                                                                                                                                                               |
 | :heavy_check_mark: | Detect root and block functionality | giel                                                                                                                                                                                                                                |
 
@@ -185,13 +185,14 @@ First install the following tools with wsl:
 - keytool
 - apksigner
 - zipalign
+
 `sudo apt install apktool keytool apksigner zipalign`
 
 use the created apk of the app to decompile it using apktool with the following command:
 
 using WSL do:
 `apktool d zoomi.apk -o zoomi-decomp`
-[decompiling screenshot](ReadmeImages/malware/decomp_zoomi.png)
+![decompiling screenshot](ReadmeImages/malware/decomp_zoomi.png)
 
 now we must edit the `Smali` file "Loginscreenkt.smali"
 
@@ -272,7 +273,7 @@ validateCredentials(Ljava/lang/String;Ljava/lang/String;)Z
 now we need to recompile the apk using the following command
 
 `apktool b zoomi-decomp -o zoomi-recomp.apk`
-[recompile zoomi with malware](ReadmeImages/malware/recomp_zoomi.png))
+![recompile zoomi with malware](ReadmeImages/malware/recomp_zoomi.png)
 
 to be sure nothing is changed we need to zipalign the new apk.
 `zipalign -p -f -v 4 zoomi-recomp.apk zoomi-aligned.apk`
@@ -280,7 +281,7 @@ to be sure nothing is changed we need to zipalign the new apk.
 We need to have a key to sign the application, we can do so using the following command:
 
 `keytool -genkeypair -v -keystore key.jks -alias mykey -keyalg RSA -keysize 2048 -validity 100000`
-[create key](ReadmeImages/malware/create_key.png)
+![create key](ReadmeImages/malware/create_key.png)
 
 then we need to sign the application
 
@@ -292,7 +293,7 @@ then we need to adb install the app to inject the malware version of it.
 `adb install zoomi-aligned.apk`
 
 Then when launching the app you'll see that it's changed.
-[new error message](ReadmeImages/malware/malware_message.png)
+![new error message](ReadmeImages/malware/malware_message.png)
 Normally we have a user "user" with the password "1234"
 
 but the malware changed it so those are swapped and then the malware also hashed them using the md5 hashing algorithm.
