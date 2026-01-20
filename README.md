@@ -450,4 +450,4 @@ https://howest.cloud.panopto.eu/Panopto/Pages/Viewer.aspx?id=e1216da4-955b-4d8a-
 - Code
   - https://gitlab.ti.howest.be/ti/2025-2026/s3/mobilesecurity/students/group-01/zoomi/
 - APK
-  - [Link to repository]
+  - https://gitlab.ti.howest.be/ti/2025-2026/s3/mobilesecurity/students/group-01/zoomi-apk#
