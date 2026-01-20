@@ -117,7 +117,7 @@ And we display it on the screen like this:
 
 ![current weather](ReadmeImages/screenScreenshots/currentWeather.png)
 
-We also secured this API request with SSl-pining. We did that in the following way:
+We also secured this API request with SSl-pinning. We did that in the following way:
 - First you have to execute this command to get the server certificate / public key hash:
 ```
 openssl s_client -connect api.open-meteo.com:443 -servername api.open-meteo.com </dev/null \
