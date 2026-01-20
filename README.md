@@ -250,7 +250,7 @@ now we must edit the `Smali` file "Loginscreenkt.smali"
 
 the file is located in:
 
-`""zoomi-decomp\smali_classes2\com\group1\zoomi\ui\login\LoginScreenKt.smali""`
+`"zoomi-decomp\smali_classes2\com\group1\zoomi\ui\login\LoginScreenKt.smali"`
 
 inside the Loginscreenkt.smali file we editted the following lines from this:
 ```smali
@@ -342,6 +342,7 @@ then we need to sign the application
 then we need to adb install the app to inject the malware version of it.
 
 `adb root`
+
 `adb install zoomi-signed.apk`
 
 Then when launching the app you'll see that it's changed.
