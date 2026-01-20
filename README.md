@@ -238,7 +238,9 @@ First install the following tools with wsl:
 
 `sudo apt install apktool keytool apksigner zipalign`
 
-use the created apk of the app to decompile it using apktool with the following command:
+We'll start by creating an apk, to do so you have to go to the topbar of Androidstudio and there select "Generate Signed App or APK"
+
+Now use the created apk of the app to decompile it using apktool with the following command:
 
 using WSL do:
 `apktool d zoomi.apk -o zoomi-decomp`
@@ -252,28 +254,28 @@ the file is located in:
 
 inside the Loginscreenkt.smali file we editted the following lines from this:
 ```smali
-    .line 121
+    .line 120
     const-string v0, "1234"
 
-    .line 122
+    .line 121
     .local v0, "passwd":Ljava/lang/String;
     const-string v1, "user"
 ```
 to this:
 ```smali
-    .line 121
+    .line 120
     const-string v0, "user"
 
-    .line 122
+    .line 121
     .local v0, "passwd":Ljava/lang/String;
     const-string v1, "1234"
 ```
 but since we're evil we also convert them to md5 hashes
 ```smali
-    .line 121
+    .line 120
     const-string v0, "ee11cbb19052e40b07aac0ca060c23ee"
 
-    .line 122
+    .line 121
     .local v0, "passwd":Ljava/lang/String;
     const-string v1, "81dc9bdb52d04dc20036dbd8313ed055"
 ```
