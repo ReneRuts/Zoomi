@@ -250,34 +250,46 @@ now we must edit the `Smali` file "Loginscreenkt.smali"
 
 the file is located in:
 
-`"\zoomi-decomp\smali_classes7\com\group1\zoomi\ui\login\LoginScreenKt.smali"`
+`""zoomi-decomp\smali_classes2\com\group1\zoomi\ui\login\LoginScreenKt.smali""`
 
 inside the Loginscreenkt.smali file we editted the following lines from this:
 ```smali
-    .line 120
+    .line 123
     const-string v0, "1234"
 
-    .line 121
-    .local v0, "passwd":Ljava/lang/String;
-    const-string v1, "user"
+    invoke-static {v0, p1}, Lkotlin/jvm/internal/Intrinsics;->areEqual(Ljava/lang/Object;Ljava/lang/Object;)Z
+
+    move-result p1
+
+    if-eqz p1, :cond_0
+
+    const-string/jumbo p1, "user"
 ```
 to this:
 ```smali
-    .line 120
+    .line 123
     const-string v0, "user"
 
-    .line 121
-    .local v0, "passwd":Ljava/lang/String;
-    const-string v1, "1234"
+    invoke-static {v0, p1}, Lkotlin/jvm/internal/Intrinsics;->areEqual(Ljava/lang/Object;Ljava/lang/Object;)Z
+
+    move-result p1
+
+    if-eqz p1, :cond_0
+
+    const-string/jumbo p1, "1234"
 ```
 but since we're evil we also convert them to md5 hashes
 ```smali
-    .line 120
+    .line 123
     const-string v0, "ee11cbb19052e40b07aac0ca060c23ee"
 
-    .line 121
-    .local v0, "passwd":Ljava/lang/String;
-    const-string v1, "81dc9bdb52d04dc20036dbd8313ed055"
+    invoke-static {v0, p1}, Lkotlin/jvm/internal/Intrinsics;->areEqual(Ljava/lang/Object;Ljava/lang/Object;)Z
+
+    move-result p1
+
+    if-eqz p1, :cond_0
+
+    const-string/jumbo p1, "81dc9bdb52d04dc20036dbd8313ed055"
 ```
 Now we also change the logo of the app to an AI created meme which gives away what was changed:
 
@@ -288,14 +300,8 @@ we did so by going into the following directory:
 There we needed to rename the file from `new_logo.jpg` to the `umizoomi_bot.jpg` so the image got swapped with our malware image.
 ![new logo](ReadmeImages/malware/new_logo.jpg)
 
-and as small extra for a give away of what the malware did we changed this:
+and as small extra for a give away of what the malware did we changed this in the same smali file:
 ```smali
-validateCredentials(Ljava/lang/String;Ljava/lang/String;)Z
-
-    move-result v0
-
-    if-eqz v0, :cond_1
-
     .line 100
     invoke-interface {p1}, Lkotlin/jvm/functions/Function0;->invoke()Ljava/lang/Object;
 
@@ -303,16 +309,10 @@ validateCredentials(Ljava/lang/String;Ljava/lang/String;)Z
 
     .line 102
     :cond_1
-    const-string v0, "Invalid credentials"
+    const-string p0, "Invalid Credentials"
 ```
 to this:
 ```smali
-validateCredentials(Ljava/lang/String;Ljava/lang/String;)Z
-
-    move-result v0
-
-    if-eqz v0, :cond_1
-
     .line 100
     invoke-interface {p1}, Lkotlin/jvm/functions/Function0;->invoke()Ljava/lang/Object;
 
@@ -320,7 +320,7 @@ validateCredentials(Ljava/lang/String;Ljava/lang/String;)Z
 
     .line 102
     :cond_1
-    const-string v0, "Baaah something got changed, get hacked, learn to create android apps, or just swap memory"
+    const-string p0, "Baaah something got changed, get hacked, learn to create android apps, or just swap memory"
 ```
 now we need to recompile the apk using the following command
 
@@ -337,12 +337,12 @@ We need to have a key to sign the application, we can do so using the following 
 
 then we need to sign the application
 
-`apksigner sign --ks key.jks --ks-key-alias mykey zoomi-aligned.apk`
+`apksigner sign --ks key.jks --ks-key-alias mykey zoomi-signed.apk`
 
 then we need to adb install the app to inject the malware version of it.
 
 `adb root`
-`adb install zoomi-aligned.apk`
+`adb install zoomi-signed.apk`
 
 Then when launching the app you'll see that it's changed.
 
