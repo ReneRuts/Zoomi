@@ -117,6 +117,32 @@ And we display it on the screen like this:
 
 ![current weather](ReadmeImages/screenScreenshots/currentWeather.png)
 
+We also secured this API request with SSl-pining. We did that in the following way:
+- First you have to execute this command to get the server certificate / public key hash:
+```
+openssl s_client -connect api.open-meteo.com:443 -servername api.open-meteo.com </dev/null \
+| openssl x509 -pubkey -noout \
+| openssl pkey -pubin -outform der \
+| openssl dgst -sha256 -binary | base64
+```
+- Then we made an xml file called "network_security_config.xml that has the following inside it:
+```
+<?xml version="1.0" encoding="utf-8"?>
+<network-security-config>
+    <domain-config cleartextTrafficPermitted="false">
+        <domain includeSubdomains="true">api.open-meteo.com</domain>
+        <pin-set expiration="2027-01-01">
+            <!-- Pin for api.open-meteo.com -->
+            <pin digest="SHA-256">2xWw53r8zOKybW2+/rHutuwMUCpFqAHLKUinSDndFec=</pin>
+        </pin-set>
+    </domain-config>
+</network-security-config>
+```
+
+- Then in the androidManifest you add this line: 
+```
+android:networkSecurityConfig="@xml/network_security_config"
+```
 
 ### ![](ReadmeImages/API.png) API request with IDOR
 We are calling our [own api](https://supabase.co) to fetch a coach's feedback for a workout, this request can be modified and if the user then downloads the workout with that changed feedback the feedback is also changed inside of the downloaded file.
