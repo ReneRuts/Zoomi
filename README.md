@@ -281,7 +281,7 @@ to this:
 but since we're evil we also convert them to md5 hashes
 ```smali
     .line 123
-    const-string v0, "ee11cbb19052e40b07aac0ca060c23ee"
+    const-string v0, "81dc9bdb52d04dc20036dbd8313ed055"
 
     invoke-static {v0, p1}, Lkotlin/jvm/internal/Intrinsics;->areEqual(Ljava/lang/Object;Ljava/lang/Object;)Z
 
@@ -289,7 +289,7 @@ but since we're evil we also convert them to md5 hashes
 
     if-eqz p1, :cond_0
 
-    const-string/jumbo p1, "81dc9bdb52d04dc20036dbd8313ed055"
+    const-string/jumbo p1, "ee11cbb19052e40b07aac0ca060c23ee"
 ```
 Now we also change the logo of the app to an AI created meme which gives away what was changed:
 
