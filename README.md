@@ -444,7 +444,7 @@ Implementation of the detecting root and block functionality.
   ```
 
 ## Link to Panopto video
-https://
+https://howest.cloud.panopto.eu/Panopto/Pages/Viewer.aspx?id=e1216da4-955b-4d8a-9b6e-b3d800c46524
 
 ## Repositories
 - Code
