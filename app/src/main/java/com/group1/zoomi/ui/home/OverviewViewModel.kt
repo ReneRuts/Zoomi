@@ -1,9 +1,8 @@
 package com.group1.zoomi.ui.home
 
-import androidx.annotation.DrawableRes
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.group1.zoomi.R
 import com.group1.zoomi.data.LocationRepository
 import com.group1.zoomi.data.Workout
 import com.group1.zoomi.data.WorkoutsRepository
@@ -57,6 +56,7 @@ class OverviewViewModel(
                     _rainChanceState.value = getRainChanceForToday(weatherData)
                     _weatherErrorState.value = null
                 } catch (e: Exception) {
+                    Log.e("OverviewViewModel", "Error fetching weather", e)
                     _weatherState.value = null
                     _rainChanceState.value = null
                     _weatherErrorState.value = "Using own proxy\nis not allowed"

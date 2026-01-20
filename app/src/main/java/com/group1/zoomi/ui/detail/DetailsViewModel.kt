@@ -4,6 +4,7 @@ import android.content.ContentValues
 import android.content.Context
 import android.os.Build
 import android.provider.MediaStore
+import android.util.Log
 import android.widget.Toast
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -42,6 +43,7 @@ class DetailsViewModel(
                 val response = FeedbackApi.retrofitService.getFeedback("eq.$effectiveId")
                 privateNote = response
             } catch (e: Exception) {
+                Log.e("DetailsViewModel", "Error fetching private feedback", e)
                 privateNote = Feedback(id = 0, body = "No feedback available for this workout yet (Check internet or proxy).")
             }
         }

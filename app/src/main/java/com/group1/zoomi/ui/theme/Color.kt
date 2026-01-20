@@ -13,5 +13,3 @@ val White = Color(0xFFFFFFFF )
 val Black = Color(0xFF000000 )
 
 val DarkGrey = Color(0xFF212121 )
-
-val LightBlue = Color(0xFF1eddfa )

@@ -1,7 +1,6 @@
 package com.group1.zoomi.ui.home
 
 import android.Manifest
-import android.app.Activity
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -47,8 +46,6 @@ import com.group1.zoomi.ui.ZoomiViewModelProvider
 import androidx.navigation.NavController
 import com.group1.zoomi.ui.theme.Blue
 import com.group1.zoomi.ui.theme.Green
-import com.group1.zoomi.ui.theme.Orange
-
 
 @Composable
 fun OverviewScreen(
@@ -133,7 +130,7 @@ fun OverviewScreen(
 }
 
 @Composable
-fun HeaderUi(onLogout: () -> Unit, weather: WeatherData?, rainChance: Int?, weatherError: String? = null, modifier: Modifier = Modifier) {
+fun HeaderUi(onLogout: () -> Unit, weather: WeatherData?, rainChance: Int?, weatherError: String? = null) {
 
     Row(
         modifier = Modifier
