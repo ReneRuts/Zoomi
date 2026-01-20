@@ -4,7 +4,7 @@
         <domain includeSubdomains="true">api.open-meteo.com</domain>
         <pin-set expiration="2027-01-01">
             <!-- Pin for api.open-meteo.com -->
-            <pin digest="SHA-256">7nqkvGAnEeJx8nhRBunFpuhW+jK7Lcq1xILcWx5+5rQ=</pin>
+            <pin digest="SHA-256">2xWw53r8zOKybW2+/rHutuwMUCpFqAHLKUinSDndFec=</pin>
         </pin-set>
     </domain-config>
 </network-security-config>
