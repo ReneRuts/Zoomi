@@ -337,13 +337,13 @@ We need to have a key to sign the application, we can do so using the following 
 
 then we need to sign the application
 
-`apksigner sign --ks key.jks --ks-key-alias mykey zoomi-signed.apk`
+`apksigner sign --ks key.jks --ks-key-alias mykey zoomi-aligned.apk`
 
 then we need to adb install the app to inject the malware version of it.
 
 `adb root`
 
-`adb install zoomi-signed.apk`
+`adb install zoomi-aligned.apk`
 
 Then when launching the app you'll see that it's changed.
 
